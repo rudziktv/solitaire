@@ -1,0 +1,13 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/GlobalStyle.uss?fileID=7433441132597879392&amp;guid=f517593b2763a194b8f91e1992b1c9dd&amp;type=3#GlobalStyle" />
+    <ui:VisualElement name="Background" class="background" style="flex-grow: 1;">
+        <ui:VisualElement name="Navbar" style="flex-grow: 0; flex-shrink: 0; flex-direction: row; font-size: 24px; align-items: center; padding-top: 8px; padding-right: 8px; padding-bottom: 8px; padding-left: 8px;">
+            <ui:Label tabindex="-1" text="Welcome back!" parse-escape-sequences="true" display-tooltip-when-elided="true" style="flex-grow: 1; -unity-font-style: bold;" />
+            <ui:Button text="Settings" parse-escape-sequences="true" display-tooltip-when-elided="true" />
+            <ui:Button text="Exit" parse-escape-sequences="true" display-tooltip-when-elided="true" />
+        </ui:VisualElement>
+        <ui:ScrollView style="flex-grow: 1; flex-shrink: 0; padding-top: 12px; padding-right: 12px; padding-bottom: 12px; padding-left: 12px;">
+            <ui:Button text="Klondike" parse-escape-sequences="true" display-tooltip-when-elided="true" enable-rich-text="true" />
+        </ui:ScrollView>
+    </ui:VisualElement>
+</ui:UXML>
