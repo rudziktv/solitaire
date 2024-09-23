@@ -12,8 +12,22 @@ namespace Entities
         protected GameRules Rules => Manager.GameRules;
         
         public List<Card> Cards { get; } = new();
+        
+        [SerializeField] private float gap = 0.2f;
 
-        [SerializeField] protected float gap = 0.2f;
+        public float Gap
+        {
+            get => gap;
+            set => gap = value;
+        }
+
+        protected virtual void Start() { }
+
+        public virtual void AddCards(params Card[] cards)
+        {
+            Cards.AddRange(cards);
+            ReloadCards();
+        }
 
         public virtual void LoadCards(Card[] cards)
         {
@@ -33,7 +47,7 @@ namespace Entities
 
         public virtual bool IsStackable(Card startingCard)
         {
-            return false;
+            return true;
         }
 
         public virtual void ReloadCards()
@@ -59,7 +73,6 @@ namespace Entities
         {
             var startIndex = Cards.IndexOf(startingCard);
             var stack = startingCard.AddComponent<Stack>();
-            var list = Cards.ToArray()[startIndex..(Cards.Count - 1)];
             stack.Cards.AddRange(Cards.Where((_, i) => i >= startIndex));
 
             stack.OnSuccess = () =>

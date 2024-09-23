@@ -5,9 +5,10 @@ public class GameRules : MonoBehaviour
 {
     [SerializeField] protected bool cardsRevealed = false;
     [SerializeField] protected GameObject cardPrefab;
-    // [SerializeField] protected GameObject slotPrefab;
+    [SerializeField] protected GameObject slotPrefab;
 
     public bool CardsRevealed => cardsRevealed;
+    public GameObject SlotPrefab => slotPrefab;
 
     public virtual void GameStart() { }
 

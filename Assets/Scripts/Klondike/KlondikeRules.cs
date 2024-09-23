@@ -7,9 +7,11 @@ namespace Klondike
 {
     public class KlondikeRules : GameRules
     {
-        [SerializeField] private GameObject slotPrefab;
-        
+        // [SerializeField] private GameObject slotPrefab;
+
+        private KlondikeFinalSlot[] _finalSlots;
         private KlondikeSlot[] _slots;
+        private KlondikeDeck _deck;
         private Card[] _cards;
         
         public override void GameStart()
@@ -50,6 +52,27 @@ namespace Klondike
                 // Debug.Log($"{slot.name}: {s}, {s + i + 1}");
                 
                 pos.x += 2f;
+            }
+            
+            // Create deck
+            var deckObject = Instantiate(slotPrefab, transform, true);
+            var deckPos = new Vector3(-6f, 3f, -10f);
+            deckObject.transform.position = deckPos;
+            _deck = deckObject.AddComponent<KlondikeDeck>();
+            _deck.LoadCards(_cards[MathC.Sum(7)..^0]);
+            
+            // Create final slots
+            _finalSlots = new KlondikeFinalSlot[4];
+            var finalSlotPos = transform.position;
+            finalSlotPos.z = 7f;
+            finalSlotPos.y += 3f;
+            for (int i = 0; i < 4; i++)
+            {
+                var finalSlot = Instantiate(slotPrefab, transform, true);
+                finalSlot.name = $"Slot {i + 1}";
+                finalSlot.transform.position = finalSlotPos;
+                finalSlotPos.x += 2f;
+                _finalSlots[i] = finalSlot.AddComponent<KlondikeFinalSlot>();
             }
         }
 
