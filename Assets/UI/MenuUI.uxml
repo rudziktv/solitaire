@@ -3,11 +3,26 @@
     <ui:VisualElement name="Background" class="background" style="flex-grow: 1;">
         <ui:VisualElement name="Navbar" style="flex-grow: 0; flex-shrink: 0; flex-direction: row; font-size: 24px; align-items: center; padding-top: 8px; padding-right: 8px; padding-bottom: 8px; padding-left: 8px;">
             <ui:Label tabindex="-1" text="Welcome back!" parse-escape-sequences="true" display-tooltip-when-elided="true" style="flex-grow: 1; -unity-font-style: bold;" />
-            <ui:Button text="Settings" parse-escape-sequences="true" display-tooltip-when-elided="true" />
-            <ui:Button text="Exit" parse-escape-sequences="true" display-tooltip-when-elided="true" />
+            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true">
+                <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" />
+                <ui:VisualElement class="after" style="flex-grow: 1;" />
+            </ui:Button>
+            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true">
+                <ui:VisualElement style="flex-grow: 1; background-image: resource(&apos;UI/Icons/exit-door&apos;); width: 28px; height: 28px;" />
+                <ui:VisualElement class="after" style="flex-grow: 1;" />
+            </ui:Button>
         </ui:VisualElement>
-        <ui:ScrollView style="flex-grow: 1; flex-shrink: 0; padding-top: 12px; padding-right: 12px; padding-bottom: 12px; padding-left: 12px;">
-            <ui:Button text="Klondike" parse-escape-sequences="true" display-tooltip-when-elided="true" enable-rich-text="true" />
+        <ui:ScrollView style="flex-grow: 1; flex-shrink: 0; padding-top: 12px; padding-right: 12px; padding-bottom: 12px; padding-left: 12px; flex-wrap: wrap; align-items: center;">
+            <ui:VisualElement class="gamemode-card" style="flex-grow: 1; align-self: center; background-image: resource(&apos;UI/Images/playing-cards-lay-in-a-messy-pile&apos;); padding-top: 12px; padding-right: 12px; padding-bottom: 12px; padding-left: 12px;">
+                <ui:VisualElement name="Gradient" style="flex-grow: 1; background-image: resource(&apos;UI/Images/GradientBlackToTransparent&apos;); align-self: stretch; position: absolute; left: 0; top: 0; right: 0; bottom: 0; border-top-left-radius: 12px; border-top-right-radius: 12px; border-bottom-right-radius: 12px; border-bottom-left-radius: 12px;" />
+                <ui:Label tabindex="-1" text="Klondike" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Title" />
+                <ui:Label tabindex="-1" text="The classic solitaire game." parse-escape-sequences="true" display-tooltip-when-elided="true" name="Description" class="on-hover" />
+                <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="Play" class="on-hover" style="flex-direction: row;">
+                    <ui:Label tabindex="-1" text="Play" parse-escape-sequences="true" display-tooltip-when-elided="true" />
+                    <ui:VisualElement class="icon" style="flex-grow: 1; margin-left: 8px;" />
+                    <ui:VisualElement class="after" style="flex-grow: 1;" />
+                </ui:Button>
+            </ui:VisualElement>
         </ui:ScrollView>
     </ui:VisualElement>
 </ui:UXML>
