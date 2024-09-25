@@ -34,13 +34,13 @@ namespace Entities
             for (var i = 0; i < cards.Length; i++)
             {
                 var card = cards[i];
+                card.Slot = this;
+                card.Revealed = false;
                 var vector = transform.position - Vector3.up * gap * i - Vector3.forward * (i + 1);
                 // var vector = transform.position - Vector3.up * gap * i;
                 Cards.Add(card);
                 card.transform.position = vector;
                 card.GetComponent<SpriteRenderer>().sortingOrder = i + 1;
-                card.Revealed = false;
-                card.Slot = this;
             }
             RevealLast();
         }
@@ -55,10 +55,11 @@ namespace Entities
             for (var i = 0; i < Cards.Count; i++)
             {
                 var card = Cards[i];
+                card.Slot = this;
                 var vector = transform.position - Vector3.up * gap * i - Vector3.forward * (i + 1);
                 card.transform.position = vector;
                 card.GetComponent<SpriteRenderer>().sortingOrder = i + 1;
-                card.Slot = this;
+                Debug.Log($"{card.name} reloaded : order {card.GetComponent<SpriteRenderer>().sortingOrder}");
             }
             RevealLast();
         }

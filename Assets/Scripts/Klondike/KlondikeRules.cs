@@ -76,6 +76,38 @@ namespace Klondike
             }
         }
 
+        public override void RemoveAllBoard()
+        {
+            base.RemoveAllBoard();
+
+            if (_finalSlots != null)
+            {
+                foreach (var finalSlot in _finalSlots)
+                {
+                    Destroy(finalSlot.gameObject);
+                }
+            }
+
+            if (_slots != null)
+            {
+                foreach (var slot in _slots)
+                {
+                    Destroy(slot.gameObject);
+                }
+            }
+            
+            if (_finalSlots != null)
+                Destroy(_deck.gameObject);
+            
+            if (_cards != null)
+            {
+                foreach (var card in _cards)
+                {
+                    Destroy(card.gameObject);
+                }
+            }
+        }
+
         public override Rank ValueToRank(int value)
         {
             return value switch
@@ -86,6 +118,27 @@ namespace Klondike
                 13 => Rank.King,
                 _ => (Rank)value
             };
+        }
+
+        public override void OnCardDoubleClick(Card card, Stack stack)
+        {
+            base.OnCardDoubleClick(card, stack);
+
+            foreach (var finalSlot in _finalSlots)
+            {
+                if (finalSlot.CanStackBeDropped(stack))
+                {
+                    stack.Cancel = true;
+                    // Debug.Log("Stack can be dropped");
+                    stack.OnDropSuccess(finalSlot);
+                    // finalSlot.ReloadCards();
+                    // finalSlot.OnStackDrop(stack);
+                    // stack.OnSuccess.Invoke();
+                    return;
+                }
+            }
+            
+            stack.OnDropFail();
         }
     }
 }

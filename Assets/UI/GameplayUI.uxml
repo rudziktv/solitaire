@@ -1,9 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
-<engine:UXML
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:engine="UnityEngine.UIElements"
-    xmlns:editor="UnityEditor.UIElements"
-    xsi:noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd"
->
-    
-</engine:UXML>
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/GlobalStyle.uss?fileID=7433441132597879392&amp;guid=f517593b2763a194b8f91e1992b1c9dd&amp;type=3#GlobalStyle" />
+    <Style src="project://database/Assets/UI/GameplayStyle.uss?fileID=7433441132597879392&amp;guid=d0ad295d38199f19f84a6ed569256219&amp;type=3#GameplayStyle" />
+    <ui:VisualElement name="navbar" style="align-items: center; padding-top: 6px; padding-right: 6px; padding-bottom: 6px; padding-left: 6px; flex-direction: row; justify-content: flex-end;">
+        <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="restart-game" class="tertiary square">
+            <ui:VisualElement class="icon" style="flex-grow: 1; background-image: resource(&apos;UI/Icons/restart-line&apos;);" />
+            <ui:VisualElement class="after" style="flex-grow: 1;" />
+        </ui:Button>
+        <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="exit-game" class="tertiary square">
+            <ui:VisualElement class="icon" style="flex-grow: 1; background-image: resource(&apos;UI/Icons/close-large-line&apos;);" />
+            <ui:VisualElement class="after" style="flex-grow: 1;" />
+        </ui:Button>
+    </ui:VisualElement>
+</ui:UXML>

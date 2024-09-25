@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
         LoadGameMode();
     }
 
-    private void LoadGameMode()
+    public void LoadGameMode()
     {
         GameRules.GameStart();
     }

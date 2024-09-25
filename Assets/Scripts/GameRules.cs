@@ -1,4 +1,5 @@
 using Cards;
+using Entities;
 using UnityEngine;
 
 public class GameRules : MonoBehaviour
@@ -10,7 +11,12 @@ public class GameRules : MonoBehaviour
     public bool CardsRevealed => cardsRevealed;
     public GameObject SlotPrefab => slotPrefab;
 
-    public virtual void GameStart() { }
+    public virtual void GameStart()
+    {
+        RemoveAllBoard();
+    }
+    
+    public virtual void RemoveAllBoard() { }
 
     public virtual Rank ValueToRank(int value)
     {
@@ -24,4 +30,6 @@ public class GameRules : MonoBehaviour
     }
     
     public virtual void OnStackMove() { }
+    
+    public virtual void OnCardDoubleClick(Card card, Stack stack) { }
 }

@@ -63,5 +63,10 @@ namespace Klondike
             if (Cards.Count > 0) DealCard();
             else RestartCards();
         }
+
+        private void OnDestroy()
+        {
+            Destroy(_slot.gameObject);
+        }
     }
 }

@@ -9,22 +9,35 @@ namespace Entities
         public List<Card> Cards { get; set; } = new();
         public Action OnSuccess { get; set; }
         
+        private SpriteRenderer _spriteRenderer;
         private Vector3 _beforeDragPosition;
         private Vector3 _dragOffset;
+
+        private int _beforeDragOrder;
+        
+        public bool Cancel { get; set; } = false;
 
         // private void OnTriggerEnter2D(Collider2D other)
         // {
         //     Debug.Log($"TriggerEnter {other.name}");
         // }
 
+        private void Awake()
+        {
+            _spriteRenderer = GetComponent<SpriteRenderer>();
+        }
+
         protected virtual void OnMouseDown()
         {
             _beforeDragPosition = transform.position;
+            _beforeDragOrder = _spriteRenderer.sortingOrder;
+            _spriteRenderer.sortingOrder = 999;
             Debug.Log($"OnMouseDown STACK");
         }
 
         protected virtual void OnMouseUp()
         {
+            if (Cancel) return;
             Ray ray = new()
             {
                 origin = transform.position + Vector3.up * 1f,
@@ -58,17 +71,24 @@ namespace Entities
 
             if (slot.CanStackBeDropped(this))
             {
-                slot.OnStackDrop(this);
-                OnSuccess.Invoke();
-                Destroy(this);
+                OnDropSuccess(slot);
                 return;
             }
             
             OnDropFail();
         }
 
-        protected virtual void OnDropFail()
+        public virtual void OnDropSuccess(Slot slot)
         {
+            OnSuccess.Invoke();
+            slot.OnStackDrop(this);
+            Destroy(this);
+        }
+
+        public virtual void OnDropFail()
+        {
+            if (Cancel) return;
+            _spriteRenderer.sortingOrder = _beforeDragOrder;
             transform.position = _beforeDragPosition;
             Destroy(this);
         }
