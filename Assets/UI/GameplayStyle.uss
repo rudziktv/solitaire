@@ -1,0 +1,3 @@
+#navbar > Button {
+    margin-left: 6px;
+}
