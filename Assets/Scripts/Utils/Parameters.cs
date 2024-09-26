@@ -2,7 +2,7 @@ namespace Utils
 {
     public static class Parameters
     {
-        public const float CARD_SOUND_PRESS_THRESHOLD = 0.05f;
+        public const float CARD_DISTANCE_SOUND_THRESHOLD = 0.1f;
         
         public const float DOUBLE_CLICK_TIME = 0.2f;
         public const float CARD_GAP = 0.15f;

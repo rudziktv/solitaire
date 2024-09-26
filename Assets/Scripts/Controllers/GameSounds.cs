@@ -9,6 +9,7 @@ namespace Controllers
         
         [SerializeField] private AudioClip pickUpCardClip;
         [SerializeField] private AudioClip putDownCardClip;
+        [SerializeField] private AudioClip dropDownCardClip;
 
 
         private void Awake()
@@ -18,5 +19,6 @@ namespace Controllers
 
         public AudioClip PickUpCardSound => pickUpCardClip;
         public AudioClip PutDownCardSound => putDownCardClip;
+        public AudioClip DropDownCardSound => dropDownCardClip;
     }
 }

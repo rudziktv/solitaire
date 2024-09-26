@@ -31,5 +31,5 @@ public class GameRules : MonoBehaviour
     
     public virtual void OnStackMove() { }
     
-    public virtual void OnCardDoubleClick(Card card, Stack stack) { }
+    public virtual void OnCardClick(Stack stack) { }
 }

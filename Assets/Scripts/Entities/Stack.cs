@@ -10,9 +10,12 @@ namespace Entities
 {
     public class Stack : MonoBehaviour
     {
+        private GameManager Manager => GameManager.Instance;
+        private GameRules Rules => Manager.GameRules;
         private GameSounds Sounds => GameSounds.Instance;
         
         public List<Card> Cards { get; set; } = new();
+        public bool Mute { get; set; } = false;
         public Action OnSuccess { get; set; }
 
         private AudioSource _audioSource;
@@ -21,8 +24,6 @@ namespace Entities
         private Vector3 _dragOffset;
 
         private int _beforeDragOrder;
-
-        private float _mouseDownTime;
         
         public bool Cancel { get; set; } = false;
 
@@ -30,11 +31,6 @@ namespace Entities
         {
             _spriteRenderer = GetComponent<SpriteRenderer>();
             _audioSource = GetComponent<AudioSource>();
-        }
-
-        private void Update()
-        {
-            _mouseDownTime += Time.deltaTime;
         }
 
         protected virtual void OnMouseDown()
@@ -51,11 +47,7 @@ namespace Entities
             
             var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             _dragOffset = transform.position - mousePos;
-            // Debug.Log($"OnMouseDown STACK");
-            
-            // yield return new WaitForSeconds(Parameters.CARD_SOUND_PRESS_THRESHOLD);
-            // _audioSource.clip = Sounds.PickUpCardSound;
-            // _audioSource.Play();
+            PickUpSound();
         }
 
         protected virtual void OnMouseDrag()
@@ -75,11 +67,14 @@ namespace Entities
 
         protected virtual void OnMouseUp()
         {
-            // if (_mouseDownTime >= Parameters.CARD_SOUND_PRESS_THRESHOLD)
-            // {
-            //     _audioSource.clip = Sounds.PutDownCardSound;
-            //     _audioSource.Play();
-            // }
+            var oldPos = _beforeDragPosition;
+            oldPos.z = transform.position.z;
+            Debug.Log((oldPos - transform.position).magnitude);
+            if ((oldPos - transform.position).magnitude < Parameters.CARD_DISTANCE_SOUND_THRESHOLD)
+            {
+                // MOVE TO DESIRED
+                Rules.OnCardClick(this);
+            }
             
             if (Cancel) return;
             Ray ray = new()
@@ -122,8 +117,30 @@ namespace Entities
             OnDropFail();
         }
 
+        public void PickUpSound()
+        {
+            if (Mute) return;
+            _audioSource.clip = Sounds.PickUpCardSound;
+            _audioSource.Play();
+        }
+
+        public void PutDownSound()
+        {
+            if (Mute) return;
+            _audioSource.clip = Sounds.PutDownCardSound;
+            _audioSource.Play();
+        }
+
+        public void DropSound()
+        {
+            if (Mute) return;
+            _audioSource.clip = Sounds.DropDownCardSound;
+            _audioSource.Play();
+        }
+
         public virtual void OnDropSuccess(Slot slot)
         {
+            PutDownSound();
             slot.OnStackDrop(this);
             OnSuccess.Invoke();
             Destroy(this);
@@ -131,6 +148,7 @@ namespace Entities
 
         public virtual void OnDropFail()
         {
+            DropSound();
             if (Cancel) return;
             Cards.First().Slot.ReloadCards();
             // _spriteRenderer.sortingOrder = _beforeDragOrder;

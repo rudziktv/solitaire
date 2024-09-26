@@ -120,22 +120,20 @@ namespace Klondike
             };
         }
 
-        public override void OnCardDoubleClick(Card card, Stack stack)
+        public override void OnCardClick(Stack stack)
         {
-            base.OnCardDoubleClick(card, stack);
+            base.OnCardClick(stack);
 
             foreach (var finalSlot in _finalSlots)
             {
-                if (finalSlot.CanStackBeDropped(stack))
-                {
-                    stack.Cancel = true;
-                    // Debug.Log("Stack can be dropped");
-                    stack.OnDropSuccess(finalSlot);
-                    // finalSlot.ReloadCards();
-                    // finalSlot.OnStackDrop(stack);
-                    // stack.OnSuccess.Invoke();
-                    return;
-                }
+                if (!finalSlot.CanStackBeDropped(stack)) continue;
+                stack.Cancel = true;
+                stack.OnDropSuccess(finalSlot);
+                return;
+                // Debug.Log("Stack can be dropped");
+                // finalSlot.ReloadCards();
+                // finalSlot.OnStackDrop(stack);
+                // stack.OnSuccess.Invoke();
             }
             
             stack.OnDropFail();
