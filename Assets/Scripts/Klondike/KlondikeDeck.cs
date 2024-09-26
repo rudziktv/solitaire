@@ -21,6 +21,7 @@ namespace Klondike
             slotGameObject.transform.position = vector;
             _slot = slotGameObject.AddComponent<Slot>();
             _slot.Gap = 0f;
+            _slot.RevealedGap = 0f;
         }
 
         public void LoadCards(Card[] cards)

@@ -12,6 +12,7 @@ namespace Klondike
         {
             base.Start();
             Gap = 0f;
+            RevealedGap = 0f;
         }
 
         public override bool CanStackBeDropped(Stack stack)

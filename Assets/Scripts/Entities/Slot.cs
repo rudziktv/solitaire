@@ -14,6 +14,13 @@ namespace Entities
         public List<Card> Cards { get; } = new();
         
         [SerializeField] private float gap = 0.2f;
+        [SerializeField] private float revealedGap = 0.4f;
+
+        public float RevealedGap
+        {
+            get => revealedGap;
+            set => revealedGap = value;
+        }
 
         public float Gap
         {
@@ -56,10 +63,12 @@ namespace Entities
             {
                 var card = Cards[i];
                 card.Slot = this;
-                var vector = transform.position - Vector3.up * gap * i - Vector3.forward * (i + 1);
+                var cardGap = i - 1 > 0 && Cards[i - 1].Revealed ? RevealedGap : Gap;
+                var vector = transform.position - Vector3.up * cardGap * i - Vector3.forward * (i + 1);
+                Debug.Log($"Gap: {cardGap} - Vector: {vector} // {card.name}");
                 card.transform.position = vector;
                 card.GetComponent<SpriteRenderer>().sortingOrder = i + 1;
-                Debug.Log($"{card.name} reloaded : order {card.GetComponent<SpriteRenderer>().sortingOrder}");
+                // Debug.Log($"{card.name} reloaded : order {card.GetComponent<SpriteRenderer>().sortingOrder}");
             }
             RevealLast();
         }
