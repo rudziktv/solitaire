@@ -29,10 +29,19 @@ namespace Entities
 
         protected virtual void OnMouseDown()
         {
-            _beforeDragPosition = transform.position;
             _beforeDragOrder = _spriteRenderer.sortingOrder;
+            _beforeDragPosition = transform.position;
             _spriteRenderer.sortingOrder = 999;
-            Debug.Log($"OnMouseDown STACK");
+            var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            _dragOffset = transform.position - mousePos;
+            // Debug.Log($"OnMouseDown STACK");
+        }
+
+        protected virtual void OnMouseDrag()
+        {
+            // throw new NotImplementedException();
+            var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            transform.position = mousePos + _dragOffset - Vector3.forward * 30;
         }
 
         protected virtual void OnMouseUp()
@@ -80,8 +89,8 @@ namespace Entities
 
         public virtual void OnDropSuccess(Slot slot)
         {
-            OnSuccess.Invoke();
             slot.OnStackDrop(this);
+            OnSuccess.Invoke();
             Destroy(this);
         }
 

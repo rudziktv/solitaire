@@ -36,22 +36,6 @@ namespace Entities
             ReloadCards();
         }
 
-        public virtual void LoadCards(Card[] cards)
-        {
-            for (var i = 0; i < cards.Length; i++)
-            {
-                var card = cards[i];
-                card.Slot = this;
-                card.Revealed = false;
-                var vector = transform.position - Vector3.up * gap * i - Vector3.forward * (i + 1);
-                // var vector = transform.position - Vector3.up * gap * i;
-                Cards.Add(card);
-                card.transform.position = vector;
-                card.GetComponent<SpriteRenderer>().sortingOrder = i + 1;
-            }
-            RevealLast();
-        }
-
         public virtual bool IsStackable(Card startingCard)
         {
             return true;
@@ -59,15 +43,18 @@ namespace Entities
 
         public virtual void ReloadCards()
         {
+            var v = transform.position - Vector3.forward;
             for (var i = 0; i < Cards.Count; i++)
             {
                 var card = Cards[i];
                 card.Slot = this;
-                var cardGap = i - 1 > 0 && Cards[i - 1].Revealed ? RevealedGap : Gap;
-                var vector = transform.position - Vector3.up * cardGap * i - Vector3.forward * (i + 1);
-                Debug.Log($"Gap: {cardGap} - Vector: {vector} // {card.name}");
-                card.transform.position = vector;
+                var cardGap = card.Revealed ? RevealedGap : Gap;
+                // var vector = transform.position - Vector3.up * cardGap * i - Vector3.forward * (i + 1);
+                // Debug.Log($"Gap: {cardGap} - Vector: {vector} // {card.name}");
+                card.transform.position = v;
                 card.GetComponent<SpriteRenderer>().sortingOrder = i + 1;
+                v -= Vector3.up * cardGap;
+                v -= Vector3.forward;
                 // Debug.Log($"{card.name} reloaded : order {card.GetComponent<SpriteRenderer>().sortingOrder}");
             }
             RevealLast();

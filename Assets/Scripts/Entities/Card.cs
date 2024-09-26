@@ -74,18 +74,18 @@ namespace Entities
             _stack = Slot.OnStackGrab(this);
 
             // _beforeDragPosition = transform.position;
-            var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            _dragOffset = transform.position - mousePos;
+            // var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            // _dragOffset = transform.position - mousePos;
             // _beforeDragOrder = _spriteRenderer.sortingOrder;
             // _spriteRenderer.sortingOrder = 999;
         }
 
-        private void OnMouseDrag()
-        {
-            if (!Revealed || !Slot.IsStackable(this)) return;
-            var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            transform.position = mousePos + _dragOffset - Vector3.forward * 30;
-        }
+        // private void OnMouseDrag()
+        // {
+        //     if (!Revealed || !Slot.IsStackable(this)) return;
+        //     var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //     transform.position = mousePos + _dragOffset - Vector3.forward * 30;
+        // }
 
         // private void OnMouseUp()
         // {

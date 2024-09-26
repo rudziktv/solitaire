@@ -48,7 +48,7 @@ namespace Klondike
                 _slots[i] = slotScript;
                 
                 var s = MathC.Sum(i);
-                slotScript.LoadCards(_cards[s..(s + i + 1)]);
+                slotScript.AddCards(_cards[s..(s + i + 1)]);
                 // Debug.Log($"{slot.name}: {s}, {s + i + 1}");
                 
                 pos.x += 2f;
