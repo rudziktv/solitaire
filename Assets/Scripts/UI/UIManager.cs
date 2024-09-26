@@ -17,9 +17,11 @@ namespace UI
         {
             var res = Root.Q<Button>("restart-game");
             var exit = Root.Q<Button>("exit-game");
+            var ver = Root.Q<Label>("version");
 
             res.clicked += Manager.LoadGameMode;
             exit.clicked += Application.Quit;
+            ver.text = Application.version;
         }
     }
 }

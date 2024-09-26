@@ -544,6 +544,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1963232838}
   - component: {fileID: 1963232839}
+  - component: {fileID: 1963232840}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -581,6 +582,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameRules: {fileID: 1133558138}
   backCardSprite: {fileID: 21300000, guid: 431a21149e6b6e6e695243d52123f56c, type: 3}
+--- !u!114 &1963232840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1963232837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfcbd07b1a584656a1b7c4127857c225, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pickUpCardClip: {fileID: 8300000, guid: 4c298903116e93a969ee56db219b6517, type: 3}
+  putDownCardClip: {fileID: 8300000, guid: 1618285811a964e7099c96683ca11ed2, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

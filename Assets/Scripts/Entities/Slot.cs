@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using Utils;
 
 namespace Entities
 {
@@ -13,8 +14,8 @@ namespace Entities
         
         public List<Card> Cards { get; } = new();
         
-        [SerializeField] private float gap = 0.2f;
-        [SerializeField] private float revealedGap = 0.4f;
+        [SerializeField] private float gap = Parameters.CARD_GAP;
+        [SerializeField] private float revealedGap = Parameters.REVEALED_CARD_GAP;
 
         public float RevealedGap
         {

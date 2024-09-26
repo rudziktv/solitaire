@@ -11,4 +11,5 @@
             <ui:VisualElement class="after" style="flex-grow: 1;" />
         </ui:Button>
     </ui:VisualElement>
+    <ui:Label tabindex="-1" text="{version}" parse-escape-sequences="true" display-tooltip-when-elided="true" name="version" style="position: absolute; bottom: 0; right: 0;" />
 </ui:UXML>

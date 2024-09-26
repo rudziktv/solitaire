@@ -1,0 +1,13 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/GlobalStyle.uss?fileID=7433441132597879392&amp;guid=f517593b2763a194b8f91e1992b1c9dd&amp;type=3#GlobalStyle" />
+    <ui:VisualElement class="gamemode-card" style="align-self: center; background-image: resource(&apos;UI/Images/playing-cards-lay-in-a-messy-pile&apos;); padding-top: 12px; padding-right: 12px; padding-bottom: 12px; padding-left: 12px; border-top-left-radius: 20px; border-top-right-radius: 20px; border-bottom-right-radius: 20px; border-bottom-left-radius: 20px;">
+        <ui:VisualElement name="Gradient" style="flex-grow: 1; background-image: resource(&apos;UI/Images/GradientBlackToTransparent&apos;); align-self: stretch; position: absolute; left: 0; top: 0; right: 0; bottom: 0; border-top-left-radius: 20px; border-top-right-radius: 20px; border-bottom-right-radius: 20px; border-bottom-left-radius: 20px;" />
+        <ui:Label tabindex="-1" text="Klondike" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Title" style="margin-bottom: 8px;" />
+        <ui:Label tabindex="-1" text="The classic solitaire game." parse-escape-sequences="true" display-tooltip-when-elided="true" name="Description" class="on-hover" style="margin-bottom: 8px;" />
+        <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="Play" class="on-hover" style="flex-direction: row;">
+            <ui:Label tabindex="-1" text="Play" parse-escape-sequences="true" display-tooltip-when-elided="true" />
+            <ui:VisualElement name="Icon" class="icon" style="flex-grow: 1; margin-left: 8px; background-image: resource(&apos;UI/Icons/play-fill&apos;); -unity-background-image-tint-color: rgb(27, 27, 27);" />
+            <ui:VisualElement class="after" style="flex-grow: 1;" />
+        </ui:Button>
+    </ui:VisualElement>
+</ui:UXML>
