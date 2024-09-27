@@ -34,7 +34,7 @@ namespace Entities
         public virtual void AddCards(params Card[] cards)
         {
             Cards.AddRange(cards);
-            ReloadCards();
+            ReloadCards(true);
         }
 
         public virtual bool IsStackable(Card startingCard)
@@ -42,7 +42,7 @@ namespace Entities
             return true;
         }
 
-        public virtual void ReloadCards()
+        public virtual void ReloadCards(bool muted = false)
         {
             var v = transform.position - Vector3.forward;
             for (var i = 0; i < Cards.Count; i++)
@@ -58,13 +58,15 @@ namespace Entities
                 v -= Vector3.forward;
                 // Debug.Log($"{card.name} reloaded : order {card.GetComponent<SpriteRenderer>().sortingOrder}");
             }
-            RevealLast();
+            RevealLast(muted);
         }
 
-        protected virtual void RevealLast()
+        protected virtual void RevealLast(bool muted = false)
         {
             if (Cards.Count > 0)
-                Cards[^1].Revealed = true;
+            {
+                Cards[^1].FlipCard(true, muted);
+            }
         }
 
         public virtual Stack OnStackGrab(Card startingCard)

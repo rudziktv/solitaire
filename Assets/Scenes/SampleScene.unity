@@ -597,6 +597,8 @@ MonoBehaviour:
   pickUpCardClip: {fileID: 8300000, guid: 4c298903116e93a969ee56db219b6517, type: 3}
   putDownCardClip: {fileID: 8300000, guid: 1618285811a964e7099c96683ca11ed2, type: 3}
   dropDownCardClip: {fileID: 8300000, guid: ee9b17ab2e3b27d94abe5bfc148032fd, type: 3}
+  flipCardClip: {fileID: 8300000, guid: bd531f68e6c9d9ae9a40e1e6e0923b15, type: 3}
+  resetDeckClip: {fileID: 8300000, guid: 98494c69b71ef2856be62e14fa403a80, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

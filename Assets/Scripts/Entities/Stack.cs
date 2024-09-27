@@ -120,22 +120,25 @@ namespace Entities
         public void PickUpSound()
         {
             if (Mute) return;
-            _audioSource.clip = Sounds.PickUpCardSound;
-            _audioSource.Play();
+            _audioSource.PlayOneShot(Sounds.PickUpCardSound);
+            // _audioSource.clip = Sounds.PickUpCardSound;
+            // _audioSource.Play();
         }
 
         public void PutDownSound()
         {
             if (Mute) return;
-            _audioSource.clip = Sounds.PutDownCardSound;
-            _audioSource.Play();
+            _audioSource.PlayOneShot(Sounds.PutDownCardSound);
+            // _audioSource.clip = Sounds.PutDownCardSound;
+            // _audioSource.Play();
         }
 
         public void DropSound()
         {
             if (Mute) return;
-            _audioSource.clip = Sounds.DropDownCardSound;
-            _audioSource.Play();
+            _audioSource.PlayOneShot(Sounds.DropDownCardSound);
+            // _audioSource.clip = Sounds.DropDownCardSound;
+            // _audioSource.Play();
         }
 
         public virtual void OnDropSuccess(Slot slot)

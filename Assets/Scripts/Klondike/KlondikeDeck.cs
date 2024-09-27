@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Controllers;
 using Entities;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -8,11 +9,15 @@ namespace Klondike
 {
     public class KlondikeDeck : Deck
     {
+        GameSounds Sounds => GameSounds.Instance;
         private Slot _slot;
         private List<Card> Cards { get; } = new();
+
+        private AudioSource _audioSource;
         
         private void Start()
         {
+            _audioSource = gameObject.AddComponent<AudioSource>();
             name = "Deck";
             var slotGameObject = Instantiate(Rules.SlotPrefab, Rules.transform, true);
             slotGameObject.name = "Deck Slot";
@@ -35,14 +40,17 @@ namespace Klondike
             var card = Cards[^1];
             _slot.AddCards(card);
             Cards.Remove(card);
+            _audioSource.PlayOneShot(Sounds.FlipCardSound);
         }
 
         private void RestartCards()
         {
+            if (_slot.Cards.Count == 0) return;
             Cards.AddRange(_slot.Cards);
             Cards.Reverse();
             _slot.Cards.Clear();
             RefreshCards();
+            _audioSource.PlayOneShot(Sounds.ResetDeckSound);
         }
 
         public void RefreshCards()
