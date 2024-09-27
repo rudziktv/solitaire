@@ -545,6 +545,7 @@ GameObject:
   - component: {fileID: 1963232838}
   - component: {fileID: 1963232839}
   - component: {fileID: 1963232840}
+  - component: {fileID: 1963232841}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -596,9 +597,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickUpCardClip: {fileID: 8300000, guid: 4c298903116e93a969ee56db219b6517, type: 3}
   putDownCardClip: {fileID: 8300000, guid: 1618285811a964e7099c96683ca11ed2, type: 3}
-  dropDownCardClip: {fileID: 8300000, guid: ee9b17ab2e3b27d94abe5bfc148032fd, type: 3}
+  dropDownCardClip: {fileID: 8300000, guid: 1618285811a964e7099c96683ca11ed2, type: 3}
   flipCardClip: {fileID: 8300000, guid: bd531f68e6c9d9ae9a40e1e6e0923b15, type: 3}
   resetDeckClip: {fileID: 8300000, guid: 98494c69b71ef2856be62e14fa403a80, type: 3}
+--- !u!114 &1963232841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1963232837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dd0bac2538b4dd7a163a2ff6fc2664b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationMode: 2
+  moveTime: 0.5
+  moveVelocity: 2
+  distancePerSecond: 20
+  easingCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

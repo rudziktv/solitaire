@@ -8,6 +8,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Sprite backCardSprite;
     public GameRules GameRules => gameRules;
     public Sprite BackCardSprite => backCardSprite;
+
+    public bool DisabledInteractions { get; set; }
+    // public bool Paused { get; set; }
     
     private void Awake()
     {

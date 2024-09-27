@@ -50,13 +50,11 @@ namespace Entities
                 var card = Cards[i];
                 card.Slot = this;
                 var cardGap = card.Revealed ? RevealedGap : Gap;
-                // var vector = transform.position - Vector3.up * cardGap * i - Vector3.forward * (i + 1);
-                // Debug.Log($"Gap: {cardGap} - Vector: {vector} // {card.name}");
-                card.transform.position = v;
-                card.GetComponent<SpriteRenderer>().sortingOrder = i + 1;
+                // card.transform.position = v;
+                card.MoveTo(new(v, i + 1, true));
+                // card.GetComponent<SpriteRenderer>().sortingOrder = ;
                 v -= Vector3.up * cardGap;
                 v -= Vector3.forward;
-                // Debug.Log($"{card.name} reloaded : order {card.GetComponent<SpriteRenderer>().sortingOrder}");
             }
             RevealLast(muted);
         }

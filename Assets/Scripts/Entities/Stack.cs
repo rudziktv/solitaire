@@ -128,7 +128,20 @@ namespace Entities
         public void PutDownSound()
         {
             if (Mute) return;
-            _audioSource.PlayOneShot(Sounds.PutDownCardSound);
+
+            var firstCard = Cards.First();
+
+            Action<Card> listener = null;
+            listener = (card) =>
+            {
+                Debug.Log($"PutDownSound {card}");
+                var source = card.GetComponent<AudioSource>();
+                source.PlayOneShot(Sounds.PutDownCardSound);
+                firstCard.OnMovementEnd -= listener;
+            };
+            firstCard.OnMovementEnd += listener;
+            
+            // _audioSource.PlayOneShot(Sounds.PutDownCardSound);
             // _audioSource.clip = Sounds.PutDownCardSound;
             // _audioSource.Play();
         }
@@ -136,9 +149,20 @@ namespace Entities
         public void DropSound()
         {
             if (Mute) return;
-            _audioSource.PlayOneShot(Sounds.DropDownCardSound);
+            // _audioSource.PlayOneShot(Sounds.DropDownCardSound);
             // _audioSource.clip = Sounds.DropDownCardSound;
             // _audioSource.Play();
+            var firstCard = Cards.First();
+
+            Action<Card> listener = null;
+            listener = (card) =>
+            {
+                Debug.Log($"PutDownSound {card}");
+                var source = card.GetComponent<AudioSource>();
+                source.PlayOneShot(Sounds.DropDownCardSound);
+                firstCard.OnMovementEnd -= listener;
+            };
+            firstCard.OnMovementEnd += listener;
         }
 
         public virtual void OnDropSuccess(Slot slot)
