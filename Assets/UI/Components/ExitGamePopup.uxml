@@ -1,0 +1,20 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Styles/Popup.uss?fileID=7433441132597879392&amp;guid=6fed8e240d84fddfb9a03dde897aa22d&amp;type=3#Popup" />
+    <Style src="project://database/Assets/UI/GlobalStyle.uss?fileID=7433441132597879392&amp;guid=f517593b2763a194b8f91e1992b1c9dd&amp;type=3#GlobalStyle" />
+    <ui:VisualElement name="backdrop" class="popup-backdrop" style="flex-grow: 1;">
+        <ui:VisualElement name="box" class="popup-box bg-color">
+            <ui:Label tabindex="-1" text="Are you sure?" parse-escape-sequences="true" display-tooltip-when-elided="true" name="title" class="popup-title" />
+            <ui:Label tabindex="-1" text="Do you really want to leave?" parse-escape-sequences="true" display-tooltip-when-elided="true" name="message" class="popup-message" />
+            <ui:VisualElement name="actions" class="popup-actions" style="flex-grow: 1;">
+                <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="stay" class="tertiary" style="margin-right: 4px;">
+                    <ui:Label tabindex="-1" text="Stay" parse-escape-sequences="true" display-tooltip-when-elided="true" />
+                    <ui:VisualElement class="after" style="flex-grow: 1;" />
+                </ui:Button>
+                <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="leave" style="margin-left: 4px;">
+                    <ui:Label tabindex="-1" text="Leave" parse-escape-sequences="true" display-tooltip-when-elided="true" />
+                    <ui:VisualElement class="after" style="flex-grow: 1;" />
+                </ui:Button>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

@@ -71,13 +71,43 @@ namespace Entities
         {
             var startIndex = Cards.IndexOf(startingCard);
             var stack = startingCard.AddComponent<Stack>();
-            stack.Cards.AddRange(Cards.Where((_, i) => i >= startIndex));
-
+            var selectedCards = Cards.Where((_, i) => i >= startIndex).ToList();
+            stack.Cards.AddRange(selectedCards);
             stack.OnSuccess = () =>
             {
                 Cards.RemoveRange(startIndex, Cards.Count - startIndex);
                 ReloadCards();
             };
+            
+            
+            stack.Undo = (newSlot) =>
+            {
+                
+                
+                // var start = newSlot.Cards.IndexOf(startingCard) - selectedCards.Count - 1;
+                var start = newSlot.Cards.Count - selectedCards.Count;
+                start = Mathf.Clamp(start, 0, newSlot.Cards.Count - 1);
+                newSlot.Cards.RemoveRange(start, selectedCards.Count);
+                Cards.AddRange(selectedCards);
+                
+                ReloadCards();
+                newSlot.ReloadCards();
+            };
+            
+            if (startIndex > 0)
+            {
+                var cardBehindStack = Cards[startIndex - 1];
+                if (!cardBehindStack.Revealed)
+                {
+                    var old = stack.Undo;
+                    stack.Undo = (newSlot) =>
+                    {
+                        cardBehindStack.FlipCard(false);
+                        old.Invoke(newSlot);
+                    };
+                }
+            }
+            
             return stack;
         }
 

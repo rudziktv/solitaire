@@ -3,7 +3,7 @@
     <Style src="project://database/Assets/UI/GameplayStyle.uss?fileID=7433441132597879392&amp;guid=d0ad295d38199f19f84a6ed569256219&amp;type=3#GameplayStyle" />
     <Style src="project://database/Assets/UI/Styles/SliderStyle.uss?fileID=7433441132597879392&amp;guid=a0ba89ea16aff995684bacfec9d0ab79&amp;type=3#SliderStyle" />
     <ui:VisualElement name="navbar" style="align-items: center; padding-top: 6px; padding-right: 6px; padding-bottom: 6px; padding-left: 6px; flex-direction: row; justify-content: flex-end;">
-        <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="undo" class="tertiary square" style="overflow: visible; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;">
+        <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="undo" class="square transparent" style="overflow: visible; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;">
             <ui:VisualElement name="icon" class="icon" style="flex-grow: 1; background-image: resource(&apos;UI/Icons/arrow-go-back-line&apos;);" />
             <ui:VisualElement class="after" style="flex-grow: 1;" />
         </ui:Button>
@@ -11,20 +11,20 @@
         <ui:VisualElement name="volume-box">
             <ui:Slider high-value="1" direction="Horizontal" name="volume" focusable="false" style="flex-grow: 1; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;" />
         </ui:VisualElement>
-        <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="mute" class="tertiary square" style="overflow: visible;">
+        <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="mute" class="square transparent" style="overflow: visible;">
             <ui:VisualElement name="icon" class="icon" style="flex-grow: 1; background-image: resource(&apos;UI/Icons/volume-up-line&apos;);" />
             <ui:VisualElement class="after" style="flex-grow: 1;" />
             <ui:VisualElement name="spacer" style="flex-grow: 1; position: absolute; bottom: 0; height: 6px; width: 200%; left: 0; translate: -50% 100%;" />
         </ui:Button>
-        <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="settings" class="tertiary square">
+        <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="settings" class="square transparent">
             <ui:VisualElement class="icon" style="flex-grow: 1; background-image: resource(&apos;UI/Icons/settings-3-line&apos;);" />
             <ui:VisualElement class="after" style="flex-grow: 1;" />
         </ui:Button>
-        <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="restart-game" class="tertiary square">
+        <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="restart-game" class="square transparent">
             <ui:VisualElement class="icon" style="flex-grow: 1; background-image: resource(&apos;UI/Icons/restart-line&apos;);" />
             <ui:VisualElement class="after" style="flex-grow: 1;" />
         </ui:Button>
-        <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="exit-game" class="tertiary square">
+        <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="exit-game" class="square transparent">
             <ui:VisualElement class="icon" style="flex-grow: 1; background-image: resource(&apos;UI/Icons/close-large-line&apos;);" />
             <ui:VisualElement class="after" style="flex-grow: 1;" />
         </ui:Button>

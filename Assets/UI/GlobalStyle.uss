@@ -1,3 +1,7 @@
+Button.tertiary Label {
+    color: rgb(255, 255, 255);
+}
+
 .background {
     position: absolute;
     left: 0;
@@ -20,8 +24,8 @@ Label {
 }
 
 Button {
-    color: rgb(255, 255, 255);
-    background-color: rgb(76, 120, 152);
+    color: rgb(11, 20, 30);
+    background-color: rgb(98, 144, 195);
     border-top-width: 0;
     border-right-width: 0;
     border-bottom-width: 0;
@@ -39,6 +43,18 @@ Button {
     padding-right: 12px;
     padding-bottom: 8px;
     padding-left: 12px;
+}
+
+Button > Label {
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    color: rgb(11, 20, 30);
 }
 
 .after {
@@ -64,17 +80,6 @@ Button .after {
 
 Button:active .after {
     background-color: rgba(0, 0, 0, 0.29);
-}
-
-Button Label {
-    margin-top: 0;
-    margin-right: 0;
-    margin-bottom: 0;
-    margin-left: 0;
-    padding-top: 0;
-    padding-right: 0;
-    padding-bottom: 0;
-    padding-left: 0;
 }
 
 .gamemode-card {
@@ -158,7 +163,9 @@ Button > .icon {
 }
 
 Button.tertiary {
-    background-color: rgba(0, 0, 0, 0.47);
+    background-color: rgb(27, 39, 54);
+    color: rgb(255, 255, 255);
+    -unity-font-style: normal;
 }
 
 Button.square {
@@ -176,4 +183,30 @@ Button.square {
     margin-right: 12px;
     margin-bottom: 12px;
     margin-left: 12px;
+}
+
+.bg-color {
+    background-color: rgb(16, 23, 32);
+}
+
+Button.transparent {
+    background-color: rgba(0, 0, 0, 0.47);
+}
+
+.top-layer {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.hide {
+    opacity: 0;
+    transition-delay: 0.3s;
+    visibility: hidden;
+    display: none;
+}
+
+.hiddable-element {
 }

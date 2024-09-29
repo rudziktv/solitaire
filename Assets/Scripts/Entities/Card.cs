@@ -51,7 +51,7 @@ namespace Entities
             _spriteRenderer.sprite = Revealed ? _sprite : Manager.BackCardSprite;
         }
 
-        public void FlipCard(bool revealed, bool muted)
+        public void FlipCard(bool revealed, bool muted = false)
         {
             if (Revealed != revealed && !muted)
                 _audioSource.PlayOneShot(Sounds.FlipCardSound);

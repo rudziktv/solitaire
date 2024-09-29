@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Controllers;
 using Entities;
 using Unity.VisualScripting;
@@ -61,16 +62,43 @@ namespace Klondike
             {
                 var card = Cards[i];
                 card.Revealed = false;
-                card.transform.position = vector;
-                card.GetComponent<SpriteRenderer>().sortingOrder = i + 1;
+                // card.transform.position = vector;
+                card.MoveTo(new(vector, i + 1, true));
+                // card.GetComponent<SpriteRenderer>().sortingOrder = ;
                 card.Slot = null;
             }
         }
 
         private void OnMouseUpAsButton()
         {
-            if (Cards.Count > 0) DealCard();
-            else RestartCards();
+            if (Manager.DisabledInteractions) return;
+            if (Cards.Count > 0)
+            {
+                DealCard();
+                Manager.AddMove(() =>
+                {
+                    if (_slot.Cards.Count > 0)
+                    {
+                        var card = _slot.Cards[^1];
+                        _slot.Cards.Remove(card);
+                        Cards.Add(card);
+                    }
+                    RefreshCards();
+                });
+            }
+            else
+            {
+                RestartCards();
+                Manager.AddMove(() =>
+                {
+                    _slot.AddCards(Cards.ToArray());
+                    foreach (var card in _slot.Cards)
+                    {
+                        card.FlipCard(true);
+                    }
+                    Cards.Clear();
+                });
+            }
         }
 
         private void OnDestroy()

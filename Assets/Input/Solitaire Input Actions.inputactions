@@ -1,0 +1,34 @@
+{
+    "name": "Solitaire Input Actions",
+    "maps": [
+        {
+            "name": "Standard",
+            "id": "6e56ac03-59a0-4da7-9050-2dbe0d0cb176",
+            "actions": [
+                {
+                    "name": "Exit",
+                    "type": "Button",
+                    "id": "e5139e3e-21c5-4c19-b2aa-59e10a8adc94",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "774f5384-b702-4b71-a974-3ffe1a1a5be3",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Exit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

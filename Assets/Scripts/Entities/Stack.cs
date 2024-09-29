@@ -13,10 +13,12 @@ namespace Entities
         private GameManager Manager => GameManager.Instance;
         private GameRules Rules => Manager.GameRules;
         private GameSounds Sounds => GameSounds.Instance;
-        
+
+        public Slot OldSlot { get; set; }
         public List<Card> Cards { get; set; } = new();
         public bool Mute { get; set; } = false;
         public Action OnSuccess { get; set; }
+        public Action<Slot> Undo { get; set; }
 
         private AudioSource _audioSource;
         private SpriteRenderer _spriteRenderer;
@@ -170,6 +172,12 @@ namespace Entities
             PutDownSound();
             slot.OnStackDrop(this);
             OnSuccess.Invoke();
+            
+            if (Undo != null)
+                Manager.AddMove(() => Undo.Invoke(slot));
+            
+            Debug.Log($"Undo {Undo}");
+            
             Destroy(this);
         }
 

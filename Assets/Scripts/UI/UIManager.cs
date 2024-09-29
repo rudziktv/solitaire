@@ -8,23 +8,39 @@ namespace UI
 {
     public class UIManager : MonoBehaviour
     {
+        public static UIManager Instance { get; private set; }
+        
         protected GameManager Manager => GameManager.Instance;
         protected GameRules Rules => Manager.GameRules;
         protected GameSounds Sounds => GameSounds.Instance;
         
         [SerializeField] private UIDocument uiDoc;
+        [SerializeField] private VisualTreeAsset popupModal;
         
         private VisualElement Root => uiDoc.rootVisualElement;
+        private VisualElement _popupModal;
+        private TemplateContainer _popupTemplate;
+        
         
         private void Start()
         {
+            Instance = this;
+            
             var res = Root.Q<Button>("restart-game");
             var exit = Root.Q<Button>("exit-game");
             var ver = Root.Q<Label>("version");
             
             var undo = Root.Q<Button>("undo");
-            undo.SetEnabled(false);
-
+            // undo.SetEnabled(false);
+            undo.clicked += () =>
+            {
+                Manager.Undo();
+            };
+            
+            // settings work in progress
+            var settings = Root.Q<Button>("settings");
+            settings.SetEnabled(false);
+            
             res.clicked += Manager.LoadGameMode;
             exit.clicked += Application.Quit;
             ver.text = Application.version;
@@ -55,6 +71,28 @@ namespace UI
             // Initialize with saved values
             volume.value = Prefs.GetFloat(PreferencesList.Volume);
             VolumeControlSyncUI(mute, volume, volumeBox);
+            InitializePopup();
+        }
+
+        private void InitializePopup()
+        {
+            _popupTemplate = popupModal.Instantiate();
+            _popupTemplate.AddToClassList("top-layer");
+            _popupTemplate.AddToClassList("hide");
+            _popupTemplate.AddToClassList("hiddable-element");
+            Root.Add(_popupTemplate);
+            _popupModal = _popupTemplate.Q<VisualElement>("backdrop");
+            
+            var leave = _popupModal.Q<Button>("leave");
+            var stay = _popupModal.Q<Button>("stay");
+
+            leave.clicked += Application.Quit;
+            stay.clicked += EscapePopupOpen;
+        }
+
+        public void EscapePopupOpen()
+        {
+            _popupTemplate.ToggleInClassList("hide");
         }
 
         public static Sprite CurrentVolumeIcon()
