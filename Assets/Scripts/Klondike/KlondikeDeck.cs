@@ -11,7 +11,7 @@ namespace Klondike
     public class KlondikeDeck : Deck
     {
         GameSounds Sounds => GameSounds.Instance;
-        private Slot _slot;
+        private KlondikeDeckSlot _slot;
         private List<Card> Cards { get; } = new();
 
         private AudioSource _audioSource;
@@ -25,7 +25,7 @@ namespace Klondike
             var vector = transform.position;
             vector.x += 2f;
             slotGameObject.transform.position = vector;
-            _slot = slotGameObject.AddComponent<Slot>();
+            _slot = slotGameObject.AddComponent<KlondikeDeckSlot>();
             _slot.Gap = 0f;
             _slot.RevealedGap = 0f;
         }
@@ -91,6 +91,7 @@ namespace Klondike
                 RestartCards();
                 Manager.AddMove(() =>
                 {
+                    Cards.Reverse();
                     _slot.AddCards(Cards.ToArray());
                     foreach (var card in _slot.Cards)
                     {

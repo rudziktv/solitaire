@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Controllers;
+using JetBrains.Annotations;
 using UnityEngine;
 using Utils;
 
@@ -26,6 +27,7 @@ namespace Entities
         private Vector3 _dragOffset;
 
         private int _beforeDragOrder;
+        private int _beforeDragLayerMask;
         
         public bool Cancel { get; set; } = false;
 
@@ -33,6 +35,8 @@ namespace Entities
         {
             _spriteRenderer = GetComponent<SpriteRenderer>();
             _audioSource = GetComponent<AudioSource>();
+            // _beforeDragLayerMask = gameObject.layer;
+            // gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
         }
 
         protected virtual void OnMouseDown()
@@ -69,48 +73,12 @@ namespace Entities
 
         protected virtual void OnMouseUp()
         {
-            var oldPos = _beforeDragPosition;
-            oldPos.z = transform.position.z;
-            Debug.Log((oldPos - transform.position).magnitude);
-            if ((oldPos - transform.position).magnitude < Parameters.CARD_DISTANCE_SOUND_THRESHOLD)
-            {
-                // MOVE TO DESIRED
-                Rules.OnCardClick(this);
-            }
-            
+            if (CardAutoMove()) return;
             if (Cancel) return;
-            Ray ray = new()
-            {
-                origin = transform.position + Vector3.up * 1f,
-                direction = transform.forward
-            };
-            // Debug.DrawRay(ray.origin, ray.direction, Color.green, 20000f);
-            // if (Physics.Raycast(ray, out var hit))
-            // {
-            //     Debug.Log(hit.collider.name);
-            // }
-            var hit2D = Physics2D.Raycast(ray.origin, ray.direction);
 
-            if (hit2D.collider == null)
-            {
-                OnDropFail();
-                return;
-            }
-            
-            Debug.Log($"{hit2D.collider.name}");
-            
-            var card = hit2D.collider.GetComponent<Card>();
-            var slot = card == null ? hit2D.collider.GetComponent<Slot>() : card.Slot;
-            
-            Debug.Log($"{card} {slot}");
-
-            if (card == null && slot == null)
-            {
-                OnDropFail();
-                return;
-            }
-
-            if (slot.CanStackBeDropped(this))
+            // var currentLayer = gameObject.layer;
+            var slot = DroppableSlot();
+            if (slot != null)
             {
                 OnDropSuccess(slot);
                 return;
@@ -119,12 +87,65 @@ namespace Entities
             OnDropFail();
         }
 
+        protected virtual bool CardAutoMove()
+        {
+            var oldPos = _beforeDragPosition;
+            oldPos.z = transform.position.z;
+            if (!((oldPos - transform.position).magnitude < Parameters.CARD_DISTANCE_SOUND_THRESHOLD)) return false;
+            Rules.OnCardClick(this);
+            return true;
+        }
+
+        [CanBeNull]
+        protected virtual Slot DroppableSlot()
+        {
+            Vector3[] rays = new Vector3[9];
+            
+            var size = _spriteRenderer.size;
+            var halfWidth = size.x / 2f;
+            var halfHeight = size.y / 2f;
+
+            
+            var vector = transform.position;
+            vector.x -= halfWidth;
+            vector.y -= halfHeight;
+            vector.z += 0.5f;
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    rays[j + 3 * i] = vector;
+                    vector.x += halfWidth;
+                }
+                vector.x = transform.position.x - halfWidth;
+                vector.y += halfHeight;
+            }
+            gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+
+            foreach (var ray in rays)
+            {
+                var hit = Physics2D.Raycast(ray, transform.forward);
+                if (hit.collider == null)
+                    continue;
+                
+                var card = hit.collider.GetComponent<Card>();
+                var slot = card == null ? hit.collider.GetComponent<Slot>() : card.Slot;
+                
+                if (slot == null)
+                    continue;
+                
+                if (!slot.CanStackBeDropped(this)) continue;
+                gameObject.layer = LayerMask.NameToLayer("Default");
+                return slot;
+            }
+            gameObject.layer = LayerMask.NameToLayer("Default");
+            return null;
+        }
+
         public void PickUpSound()
         {
             if (Mute) return;
             _audioSource.PlayOneShot(Sounds.PickUpCardSound);
-            // _audioSource.clip = Sounds.PickUpCardSound;
-            // _audioSource.Play();
         }
 
         public void PutDownSound()
@@ -136,30 +157,22 @@ namespace Entities
             Action<Card> listener = null;
             listener = (card) =>
             {
-                Debug.Log($"PutDownSound {card}");
                 var source = card.GetComponent<AudioSource>();
                 source.PlayOneShot(Sounds.PutDownCardSound);
                 firstCard.OnMovementEnd -= listener;
             };
             firstCard.OnMovementEnd += listener;
-            
-            // _audioSource.PlayOneShot(Sounds.PutDownCardSound);
-            // _audioSource.clip = Sounds.PutDownCardSound;
-            // _audioSource.Play();
         }
 
         public void DropSound()
         {
             if (Mute) return;
-            // _audioSource.PlayOneShot(Sounds.DropDownCardSound);
-            // _audioSource.clip = Sounds.DropDownCardSound;
-            // _audioSource.Play();
             var firstCard = Cards.First();
 
             Action<Card> listener = null;
             listener = (card) =>
             {
-                Debug.Log($"PutDownSound {card}");
+                // Debug.Log($"PutDownSound {card}");
                 var source = card.GetComponent<AudioSource>();
                 source.PlayOneShot(Sounds.DropDownCardSound);
                 firstCard.OnMovementEnd -= listener;
@@ -176,8 +189,6 @@ namespace Entities
             if (Undo != null)
                 Manager.AddMove(() => Undo.Invoke(slot));
             
-            Debug.Log($"Undo {Undo}");
-            
             Destroy(this);
         }
 
@@ -186,8 +197,6 @@ namespace Entities
             DropSound();
             if (Cancel) return;
             Cards.First().Slot.ReloadCards();
-            // _spriteRenderer.sortingOrder = _beforeDragOrder;
-            // transform.position = _beforeDragPosition;
             Destroy(this);
         }
     }

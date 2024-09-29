@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour
         _undoActions.Add(undoMove);
         _redoActions.Clear();
         
-        Debug.Log($"Undo moves: {_undoActions.Count}");
+        // Debug.Log($"Undo moves: {_undoActions.Count}");
     }
 
     public void Undo()
@@ -66,7 +66,7 @@ public class GameManager : MonoBehaviour
         _undoActions.RemoveAt(_undoActions.Count - 1);
         action.Invoke();
         _redoActions.Add(action);
-        Debug.Log($"Undo moves: {_undoActions.Count}");
+        // Debug.Log($"Undo moves: {_undoActions.Count}");
     }
 
     public void Redo()
