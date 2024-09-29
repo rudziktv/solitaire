@@ -94,7 +94,7 @@ namespace Klondike
                     _slot.AddCards(Cards.ToArray());
                     foreach (var card in _slot.Cards)
                     {
-                        card.FlipCard(true);
+                        card.FlipCard(true, true);
                     }
                     Cards.Clear();
                 });

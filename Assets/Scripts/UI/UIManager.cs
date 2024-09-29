@@ -87,7 +87,7 @@ namespace UI
             var stay = _popupModal.Q<Button>("stay");
 
             leave.clicked += Application.Quit;
-            stay.clicked += EscapePopupOpen;
+            stay.clicked += Manager.Escape;
         }
 
         public void EscapePopupOpen()
