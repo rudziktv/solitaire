@@ -9,6 +9,8 @@ Button.tertiary Label {
     bottom: 0;
     right: 0;
     background-color: rgb(63, 95, 118);
+    background-image: resource('Sprites/Backgrounds/bg_bggenerator_com (1)');
+    -unity-background-scale-mode: scale-and-crop;
 }
 
 Label {
@@ -97,7 +99,7 @@ Button:active .after {
     transition-timing-function: ease-in-out;
 }
 
-.gamemode-card #Title {
+.gamemode-card #title {
     font-size: 24px;
     -unity-font-style: bold;
     translate: 0 48px;
@@ -115,7 +117,7 @@ Button:active .after {
     transition-timing-function: ease-in-out;
 }
 
-.gamemode-card:hover #Title {
+.gamemode-card:hover #title {
     translate: 0 0;
     opacity: 1;
 }
@@ -217,4 +219,9 @@ Button.transparent {
     margin-top: -4px;
     margin-right: -10px;
     margin-bottom: -3px;
+}
+
+Button.transparent Label {
+    color: rgb(255, 255, 255);
+    font-size: 18px;
 }

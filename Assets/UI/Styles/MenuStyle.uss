@@ -11,3 +11,16 @@
     margin-bottom: 6px;
     margin-left: 6px;
 }
+
+#navbar {
+    flex-direction: row;
+    align-items: stretch;
+    padding-top: 6px;
+    padding-right: 6px;
+    padding-bottom: 6px;
+    padding-left: 6px;
+}
+
+#navbar Button {
+    margin-left: 6px;
+}

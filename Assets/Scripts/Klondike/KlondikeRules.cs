@@ -1,6 +1,8 @@
 using Cards;
 using Entities;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Utils;
 
 namespace Klondike
@@ -24,9 +26,10 @@ namespace Klondike
             {
                 for (var r = 0; r < 13; r++)
                 {
-                    var card = Instantiate(cardPrefab).GetComponent<Card>();
+                    var card = Instantiate(CardPrefab, transform).GetComponent<Card>();
                     _cards[(int)s * 13 + r] = card;
                     card.Initialize(s, r + 1);
+                    Debug.Log($"Instantiate {card.name}");
                 }
             }
 
@@ -39,7 +42,7 @@ namespace Klondike
             Vector3 pos = new(-6f, 0f, 6f);
             for (int i = 0; i < 7; i++)
             {
-                var slot = Instantiate(slotPrefab, transform, true);
+                var slot = Instantiate(SlotPrefab, transform, true);
                 slot.name = $"Slot {i + 1}";
                 slot.transform.position = pos;
                 slot.GetComponent<SpriteRenderer>().sortingOrder = -2;
@@ -55,7 +58,7 @@ namespace Klondike
             }
             
             // Create deck
-            var deckObject = Instantiate(slotPrefab, transform, true);
+            var deckObject = Instantiate(SlotPrefab, transform, true);
             var deckPos = new Vector3(-6f, 3f, -10f);
             deckObject.transform.position = deckPos;
             _deck = deckObject.AddComponent<KlondikeDeck>();
@@ -68,7 +71,7 @@ namespace Klondike
             finalSlotPos.y += 3f;
             for (int i = 0; i < 4; i++)
             {
-                var finalSlot = Instantiate(slotPrefab, transform, true);
+                var finalSlot = Instantiate(SlotPrefab, transform, true);
                 finalSlot.name = $"Slot {i + 1}";
                 finalSlot.transform.position = finalSlotPos;
                 finalSlotPos.x += 2f;

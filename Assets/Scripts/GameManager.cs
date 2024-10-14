@@ -1,19 +1,26 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Controllers;
+using Modes;
 using UI;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     [SerializeField] private GameRules gameRules;
     [SerializeField] private Sprite backCardSprite;
+    [SerializeField] private GameObject cardPrefab;
+    [SerializeField] private GameObject slotPrefab;
     public GameRules GameRules => gameRules;
     public Sprite BackCardSprite => backCardSprite;
 
     private UIManager UI => UIManager.Instance;
     public bool DisabledInteractions { get; set; }
+    public GameObject CardPrefab => cardPrefab;
+    public GameObject SlotPrefab => slotPrefab;
 
     public float Timer { get; private set; }
     // public bool Paused { get; set; }
@@ -26,10 +33,24 @@ public class GameManager : MonoBehaviour
 
     public bool Paused { get; private set; }
     
+    // private GameAnimations _animations;
+    
     
     private void Awake()
     {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        
         Instance = this;
+        DontDestroyOnLoad(gameObject);
+        
+        var anims = new GameObject("Game Animations");
+        anims.transform.SetParent(transform);
+        // _animations = anims.AddComponent<GameAnimations>();
+        anims.AddComponent<GameAnimations>();
     }
 
     private void Start()
@@ -43,13 +64,24 @@ public class GameManager : MonoBehaviour
             Timer += Time.deltaTime;
     }
 
+    public void LoadGameMode(IGameMode gameMode)
+    {
+        var rules = gameMode.InitializeGameRules();
+        gameRules = rules;
+        // DontDestroyOnLoad(rules.gameObject);
+        SceneManager.LoadScene(0);
+        LoadGameMode();
+    }
+
     public void LoadGameMode()
     {
         Timer = 0f;
         _undoActions.Clear();
         _redoActions.Clear();
-        GameRules.GameStart();
         ActionsChanged();
+        
+        if (GameRules)
+            GameRules.GameStart();
     }
 
     public void Escape()

@@ -8,8 +8,6 @@ namespace Controllers
 {
     public class GameAnimations : MonoBehaviour
     {
-        [SerializeField] private CardAnimationMode animationMode = CardAnimationMode.DistanceBased;
-
         [Header("Time-based animations")]
         [SerializeField] private float minMoveTime = 0.1f;
         [SerializeField] private float maxMoveTime = 0.25f;
@@ -27,20 +25,6 @@ namespace Controllers
 
         public Vector3 AnimatedMove(Vector3 origin, Vector3 destination, float time)
         {
-            origin.z = destination.z;
-            var duration = (origin - destination).magnitude / distancePerSecond;
-            if (duration == 0f)
-                return destination;
-            var t = time / duration;
-            t = Mathf.Clamp01(t);
-            // Debug.Log($"Time: {duration}, t: {t}, dist: {(origin - destination).magnitude}");
-            // return AnimatedMoveExperimental(origin, destination, time);
-            return AnimatedMoveV3(origin, destination, time);
-            // return Vector3.Lerp(origin, destination, t);
-        }
-
-        private Vector3 AnimatedMoveV3(Vector3 origin, Vector3 destination, float time)
-        {
             // reset z (to avoid invalid duration&distance calculations)
             origin.z = destination.z;
             
@@ -55,5 +39,22 @@ namespace Controllers
             
             return Vector3.Lerp(origin, destination, t);
         }
+        //
+        // private Vector3 AnimatedMoveV3(Vector3 origin, Vector3 destination, float time)
+        // {
+        //     // reset z (to avoid invalid duration&distance calculations)
+        //     origin.z = destination.z;
+        //     
+        //     // time = track / (avg) velocity
+        //     var duration = (origin - destination).magnitude / distancePerSecond;
+        //     duration = Mathf.Clamp(duration, minMoveTime, maxMoveTime);
+        //     if (duration == 0f)
+        //         return destination;
+        //     
+        //     var p = time / duration;
+        //     var t = _easeInOutCurve.Evaluate(p);
+        //     
+        //     return Vector3.Lerp(origin, destination, t);
+        // }
     }
 }

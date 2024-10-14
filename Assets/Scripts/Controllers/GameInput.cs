@@ -8,7 +8,7 @@ namespace Controllers
     {
         private GameManager Manager => GameManager.Instance;
         
-        private SolitaireInputActions _actions;
+        public SolitaireInputActions Actions { get; private set; }
 
         #region InputCallbacks
 
@@ -27,35 +27,35 @@ namespace Controllers
 
         private void Awake()
         {
-            _actions = new ();
+            Actions = new ();
         }
 
         private void OnEnable()
         {
-            _actions.Enable();
+            Actions.Enable();
         }
 
         private void OnDisable()
         {
-            _actions.Disable();
+            Actions.Disable();
         }
 
         private void Start()
         {
-            _actions.Standard.Exit.performed += Escape;
-            _actions.Standard.Undo.performed += OnUndo;
+            Actions.Standard.Exit.performed += Escape;
+            Actions.Standard.Undo.performed += OnUndo;
             
-            _actions.Standard.LeftControl.started += OnLeftControlPress;
-            _actions.Standard.LeftControl.canceled += OnLeftControlReleased;
+            Actions.Standard.LeftControl.started += OnLeftControlPress;
+            Actions.Standard.LeftControl.canceled += OnLeftControlReleased;
         }
 
         private void OnDestroy()
         {
-            _actions.Standard.Exit.performed -= Escape;
-            _actions.Standard.Undo.performed -= OnUndo;
+            Actions.Standard.Exit.performed -= Escape;
+            Actions.Standard.Undo.performed -= OnUndo;
 
-            _actions.Standard.LeftControl.started -= OnLeftControlPress;
-            _actions.Standard.LeftControl.canceled -= OnLeftControlReleased;
+            Actions.Standard.LeftControl.started -= OnLeftControlPress;
+            Actions.Standard.LeftControl.canceled -= OnLeftControlReleased;
         }
     }
 }

@@ -5,11 +5,11 @@ using UnityEngine;
 public class GameRules : MonoBehaviour
 {
     [SerializeField] protected bool cardsRevealed = false;
-    [SerializeField] protected GameObject cardPrefab;
-    [SerializeField] protected GameObject slotPrefab;
+    protected GameManager Manager => GameManager.Instance;
+    public GameObject CardPrefab => Manager.CardPrefab;
+    public GameObject SlotPrefab => Manager.SlotPrefab;
 
     public bool CardsRevealed => cardsRevealed;
-    public GameObject SlotPrefab => slotPrefab;
 
     public virtual void GameStart()
     {
