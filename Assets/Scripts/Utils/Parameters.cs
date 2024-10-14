@@ -8,6 +8,6 @@ namespace Utils
         public const float CARD_GAP = 0.15f;
         public const float REVEALED_CARD_GAP = 0.30f;
 
-        public const string GAME_VERSION = "v0.1.0-alpha.3";
+        public const string GAME_VERSION = "v0.1.0-alpha.4";
     }
 }

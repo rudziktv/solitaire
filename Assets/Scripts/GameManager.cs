@@ -14,12 +14,18 @@ public class GameManager : MonoBehaviour
 
     private UIManager UI => UIManager.Instance;
     public bool DisabledInteractions { get; set; }
+
+    public float Timer { get; private set; }
     // public bool Paused { get; set; }
     
     private readonly List<Action> _undoActions = new();
     private readonly List<Action> _redoActions = new();
+    
+    public delegate void OnActionsChangedArgs(bool isUndoNotEmpty, bool isRedoNotEmpty);
+    public event OnActionsChangedArgs OnActionsChanged;
 
     public bool Paused { get; private set; }
+    
     
     private void Awake()
     {
@@ -31,11 +37,19 @@ public class GameManager : MonoBehaviour
         LoadGameMode();
     }
 
+    private void Update()
+    {
+        if (!Paused)
+            Timer += Time.deltaTime;
+    }
+
     public void LoadGameMode()
     {
+        Timer = 0f;
         _undoActions.Clear();
         _redoActions.Clear();
         GameRules.GameStart();
+        ActionsChanged();
     }
 
     public void Escape()
@@ -57,6 +71,7 @@ public class GameManager : MonoBehaviour
         _redoActions.Clear();
         
         // Debug.Log($"Undo moves: {_undoActions.Count}");
+        ActionsChanged();
     }
 
     public void Undo()
@@ -67,6 +82,7 @@ public class GameManager : MonoBehaviour
         action.Invoke();
         _redoActions.Add(action);
         // Debug.Log($"Undo moves: {_undoActions.Count}");
+        ActionsChanged();
     }
 
     public void Redo()
@@ -76,5 +92,11 @@ public class GameManager : MonoBehaviour
         _redoActions.Remove(action);
         action.Invoke();
         _undoActions.Add(action);
+        ActionsChanged();
+    }
+
+    private void ActionsChanged()
+    {
+        OnActionsChanged?.Invoke(_undoActions.Count > 0, _redoActions.Count > 0);
     }
 }

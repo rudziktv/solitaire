@@ -210,3 +210,11 @@ Button.transparent {
 
 .hiddable-element {
 }
+
+.mono-font {
+    -unity-font-definition: initial;
+    -unity-font: resource('UI/Fonts/Inconsolata-Regular');
+    margin-top: -4px;
+    margin-right: -10px;
+    margin-bottom: -3px;
+}

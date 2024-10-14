@@ -3,6 +3,7 @@ using Controllers;
 using Preferences;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Utils;
 
 namespace UI
 {
@@ -20,6 +21,8 @@ namespace UI
         private VisualElement Root => uiDoc.rootVisualElement;
         private VisualElement _popupModal;
         private TemplateContainer _popupTemplate;
+
+        private Label _timer;
         
         
         private void Start()
@@ -37,6 +40,13 @@ namespace UI
                 Manager.Undo();
             };
             
+            undo.SetEnabled(false);
+
+            Manager.OnActionsChanged += (undoNotEmpty, _) =>
+            {
+                undo.SetEnabled(undoNotEmpty);
+            };
+            
             // settings work in progress
             var settings = Root.Q<Button>("settings");
             settings.SetEnabled(false);
@@ -45,7 +55,14 @@ namespace UI
             exit.clicked += Application.Quit;
             ver.text = Application.version;
             
+            _timer = Root.Q<Label>("timer");
+            
             VolumeControlSetup();
+        }
+
+        private void Update()
+        {
+            _timer.text = TimeUtils.FormatTimer(Manager.Timer);
         }
 
         private void VolumeControlSetup()

@@ -84,6 +84,7 @@ namespace Klondike
                         Cards.Add(card);
                     }
                     RefreshCards();
+                    _audioSource.PlayOneShot(Sounds.DeckCardUndoSound);
                 });
             }
             else
@@ -98,6 +99,7 @@ namespace Klondike
                         card.FlipCard(true, true);
                     }
                     Cards.Clear();
+                    _audioSource.PlayOneShot(Sounds.ResetDeckUndoSound);
                 });
             }
         }

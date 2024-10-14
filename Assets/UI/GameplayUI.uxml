@@ -7,6 +7,10 @@
             <ui:VisualElement name="icon" class="icon" style="flex-grow: 1; background-image: resource(&apos;UI/Icons/arrow-go-back-line&apos;);" />
             <ui:VisualElement class="after" style="flex-grow: 1;" />
         </ui:Button>
+        <ui:VisualElement name="timer-box">
+            <ui:VisualElement name="timer-icon" class="icon" style="flex-grow: 1; background-image: resource(&apos;UI/Icons/hourglass-line&apos;);" />
+            <ui:Label tabindex="-1" text="21:37" parse-escape-sequences="true" display-tooltip-when-elided="true" name="timer" class="mono-font" />
+        </ui:VisualElement>
         <ui:VisualElement name="spacer" style="flex-grow: 1;" />
         <ui:VisualElement name="volume-box">
             <ui:Slider high-value="1" direction="Horizontal" name="volume" focusable="false" style="flex-grow: 1; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;" />

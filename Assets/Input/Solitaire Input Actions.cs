@@ -35,6 +35,24 @@ public partial class @SolitaireInputActions: IInputActionCollection2, IDisposabl
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Undo"",
+                    ""type"": ""Button"",
+                    ""id"": ""20381a91-f130-4a41-83ad-96e78124cf8a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Left Control"",
+                    ""type"": ""Button"",
+                    ""id"": ""d33c23a7-bc31-4a3f-93a1-ce3de0f1874c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -48,6 +66,28 @@ public partial class @SolitaireInputActions: IInputActionCollection2, IDisposabl
                     ""action"": ""Exit"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d05661bb-7048-46b1-9d72-ea537e3a9e6a"",
+                    ""path"": ""<Keyboard>/z"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Undo"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fd6097f8-fda9-4bfb-bf13-c94a5d71cab7"",
+                    ""path"": ""<Keyboard>/leftCtrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Left Control"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -57,6 +97,8 @@ public partial class @SolitaireInputActions: IInputActionCollection2, IDisposabl
         // Standard
         m_Standard = asset.FindActionMap("Standard", throwIfNotFound: true);
         m_Standard_Exit = m_Standard.FindAction("Exit", throwIfNotFound: true);
+        m_Standard_Undo = m_Standard.FindAction("Undo", throwIfNotFound: true);
+        m_Standard_LeftControl = m_Standard.FindAction("Left Control", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -119,11 +161,15 @@ public partial class @SolitaireInputActions: IInputActionCollection2, IDisposabl
     private readonly InputActionMap m_Standard;
     private List<IStandardActions> m_StandardActionsCallbackInterfaces = new List<IStandardActions>();
     private readonly InputAction m_Standard_Exit;
+    private readonly InputAction m_Standard_Undo;
+    private readonly InputAction m_Standard_LeftControl;
     public struct StandardActions
     {
         private @SolitaireInputActions m_Wrapper;
         public StandardActions(@SolitaireInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Exit => m_Wrapper.m_Standard_Exit;
+        public InputAction @Undo => m_Wrapper.m_Standard_Undo;
+        public InputAction @LeftControl => m_Wrapper.m_Standard_LeftControl;
         public InputActionMap Get() { return m_Wrapper.m_Standard; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -136,6 +182,12 @@ public partial class @SolitaireInputActions: IInputActionCollection2, IDisposabl
             @Exit.started += instance.OnExit;
             @Exit.performed += instance.OnExit;
             @Exit.canceled += instance.OnExit;
+            @Undo.started += instance.OnUndo;
+            @Undo.performed += instance.OnUndo;
+            @Undo.canceled += instance.OnUndo;
+            @LeftControl.started += instance.OnLeftControl;
+            @LeftControl.performed += instance.OnLeftControl;
+            @LeftControl.canceled += instance.OnLeftControl;
         }
 
         private void UnregisterCallbacks(IStandardActions instance)
@@ -143,6 +195,12 @@ public partial class @SolitaireInputActions: IInputActionCollection2, IDisposabl
             @Exit.started -= instance.OnExit;
             @Exit.performed -= instance.OnExit;
             @Exit.canceled -= instance.OnExit;
+            @Undo.started -= instance.OnUndo;
+            @Undo.performed -= instance.OnUndo;
+            @Undo.canceled -= instance.OnUndo;
+            @LeftControl.started -= instance.OnLeftControl;
+            @LeftControl.performed -= instance.OnLeftControl;
+            @LeftControl.canceled -= instance.OnLeftControl;
         }
 
         public void RemoveCallbacks(IStandardActions instance)
@@ -163,5 +221,7 @@ public partial class @SolitaireInputActions: IInputActionCollection2, IDisposabl
     public interface IStandardActions
     {
         void OnExit(InputAction.CallbackContext context);
+        void OnUndo(InputAction.CallbackContext context);
+        void OnLeftControl(InputAction.CallbackContext context);
     }
 }

@@ -167,6 +167,7 @@ namespace Entities
         public void DropSound()
         {
             if (Mute) return;
+            _audioSource.PlayOneShot(Sounds.MoveNotAllowedSound);
             var firstCard = Cards.First();
 
             Action<Card> listener = null;
