@@ -10,5 +10,6 @@ namespace UI
         public VisualTreeAsset popupModal;
 
         public VisualTreeAsset gameplayGUI;
+        public VisualTreeAsset menuGUI;
     }
 }

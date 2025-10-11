@@ -16,7 +16,8 @@ namespace UI.Models
         public override void OnViewCreated()
         {
             base.OnViewCreated();
-            
+
+            var menu = View.Q<Button>("main-menu");
             var res = View.Q<Button>("restart-game");
             var exit = View.Q<Button>("exit-game");
             var ver = View.Q<Label>("version");
@@ -35,7 +36,8 @@ namespace UI.Models
             var settings = View.Q<Button>("settings");
             settings.SetEnabled(false);
             
-            res.clicked += Manager.LoadGameMode;
+            menu.clicked += GameManager.Instance.LoadMainMenu;
+            res.clicked += Manager.ReloadGameMode;
             exit.clicked += Application.Quit;
             ver.text = Application.version;
             

@@ -8,6 +8,8 @@ namespace UI
     [RequireComponent(typeof(UIDocument))]
     public class UIController : MonoBehaviour
     {
+        public static UIController Instance { get; private set; }
+        
         public UIResources Resources => resources;
         
         [SerializeField] private UIResources resources;
@@ -19,10 +21,29 @@ namespace UI
 
         private void Awake()
         {
-            DontDestroyOnLoad(gameObject);
+            if (Instance != null)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            Instance = this;
+            
+            Debug.Log("CREATION OF UIController - Awake");
+            // DontDestroyOnLoad(gameObject);
             
             _uiDocument = GetComponent<UIDocument>();
             // _currentModel = new UIMainMenuModel(this, Root);
+            // ChangeModel(new UIMainMenuModel(this, Root));
+            GoToMainMenu();
+        }
+
+        public void GoToMainMenu()
+        {
+            Root.Clear();
+            var menu = resources.menuGUI.Instantiate();
+            menu.style.flexGrow = 1;
+            Root.Add(menu);
             ChangeModel(new UIMainMenuModel(this, Root));
         }
 

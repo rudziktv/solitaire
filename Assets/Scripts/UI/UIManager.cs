@@ -51,7 +51,7 @@ namespace UI
             var settings = Root.Q<Button>("settings");
             settings.SetEnabled(false);
             
-            res.clicked += Manager.LoadGameMode;
+            res.clicked += Manager.ReloadGameMode;
             exit.clicked += Application.Quit;
             ver.text = Application.version;
             

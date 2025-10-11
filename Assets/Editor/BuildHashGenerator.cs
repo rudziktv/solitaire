@@ -11,8 +11,8 @@ public class BuildHashGenerator : IPreprocessBuildWithReport
     
     public void OnPreprocessBuild(BuildReport report)
     {
-        var hash = System.Guid.NewGuid().ToString();
-        File.WriteAllText("Assets/BuildHash.txt", hash);
-        PlayerSettings.bundleVersion = $"{Parameters.GAME_VERSION}-{hash}";
+        // var hash = System.Guid.NewGuid().ToString();
+        // File.WriteAllText("Assets/BuildHash.txt", hash);
+        // PlayerSettings.bundleVersion = $"{Parameters.GAME_VERSION}-{hash}";
     }
 }

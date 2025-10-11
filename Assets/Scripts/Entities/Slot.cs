@@ -14,8 +14,17 @@ namespace Entities
         
         public List<Card> Cards { get; } = new();
         
+        [SerializeField] private Vector3 gapVector = Vector3.down;
         [SerializeField] private float gap = Parameters.CARD_GAP;
         [SerializeField] private float revealedGap = Parameters.REVEALED_CARD_GAP;
+
+        public bool slotRevealOverride = false;
+
+        public Vector3 GapVector
+        {
+            get => gapVector;
+            set => gapVector = value;
+        }
 
         public float RevealedGap
         {
@@ -45,21 +54,22 @@ namespace Entities
         public virtual void ReloadCards(bool muted = false)
         {
             var v = transform.position - Vector3.forward;
+            PreReloadCardFunction();
             for (var i = 0; i < Cards.Count; i++)
             {
                 var card = Cards[i];
                 card.Slot = this;
                 var cardGap = card.Revealed ? RevealedGap : Gap;
-                // card.transform.position = v;
                 card.MoveTo(new(v, i + 1, true));
-                // card.GetComponent<SpriteRenderer>().sortingOrder = ;
-                v -= Vector3.up * cardGap;
+                v += GapVector * cardGap;
                 v -= Vector3.forward;
             }
-            RevealLast(muted);
+            PostReloadCardFunction(muted);
         }
+        
+        protected virtual void PreReloadCardFunction() { }
 
-        protected virtual void RevealLast(bool muted = false)
+        protected virtual void PostReloadCardFunction(bool muted = false)
         {
             if (Cards.Count > 0)
             {

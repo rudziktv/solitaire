@@ -11,7 +11,7 @@ public class GameRules : MonoBehaviour
 
     public bool CardsRevealed => cardsRevealed;
 
-    public virtual void GameStart()
+    public virtual void GameStart(string args = "")
     {
         RemoveAllBoard();
     }

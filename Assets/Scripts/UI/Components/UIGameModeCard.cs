@@ -14,14 +14,17 @@ namespace UI.Components
         {
             base.OnViewCreated();
             View.Q<Label>("title").text = GameMode.Data.Name;
-            View.Q<Label>("description").text = GameMode.Data.Description;
+            // View.Q<Label>("description").text = GameMode.Data.Description;
 
             View.Q<Button>("play").clicked += OnPlay;
         }
 
         private void OnPlay()
         {
-            Manager.LoadGameMode(GameMode);
+            var difficulty = View.Q<RadioButtonGroup>("difficulty").value;
+            Manager.LoadGameModeAndScene(GameMode, difficulty == 1 ? "hard" : "easy");
+
+            
             var model = CreateView<UIGameplayModel>(Assets.gameplayGUI.Instantiate());
             Controller.NavigateTo(model.View, model);
         }

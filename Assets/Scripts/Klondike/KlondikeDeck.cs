@@ -10,7 +10,9 @@ namespace Klondike
 {
     public class KlondikeDeck : Deck
     {
-        GameSounds Sounds => GameSounds.Instance;
+        public int DealSize { get; set; } = 3;
+        
+        private static GameSounds Sounds => GameSounds.Instance;
         private KlondikeDeckSlot _slot;
         private List<Card> Cards { get; } = new();
 
@@ -26,8 +28,10 @@ namespace Klondike
             vector.x += 2f;
             slotGameObject.transform.position = vector;
             _slot = slotGameObject.AddComponent<KlondikeDeckSlot>();
-            _slot.Gap = 0f;
-            _slot.RevealedGap = 0f;
+            _slot.DealSize = DealSize;
+            _slot.GapVector = Vector3.right;
+            _slot.Gap = 0;
+            _slot.RevealedGap = 0.3f;
         }
 
         public void LoadCards(Card[] cards)
@@ -36,12 +40,65 @@ namespace Klondike
             RefreshCards();
         }
 
-        private void DealCard()
+        private void DealFromDeck()
         {
-            var card = Cards[^1];
-            _slot.AddCards(card);
-            Cards.Remove(card);
+            // NEW with DealSize
+            var dealCards = new List<Card>();
+            int i;
+            for (i = Cards.Count - 1; i >= 0 && (Cards.Count - 1) - i < DealSize; i--)
+            {
+                // Debug.Log($"Deal For loop {i}");
+                dealCards.Add(Cards[i]);
+                Cards[i].Revealed = true;
+            }
+            // Debug.Log(i);
+            var prevRevealedCards = new List<Card>();
+            for (int j = _slot.Cards.Count - 1; j >= 0 && _slot.Cards.Count - 1 - j < DealSize; j--)
+            {
+                if (_slot.Cards[j].Revealed)
+                    prevRevealedCards.Add(_slot.Cards[j]);
+            }
+            // Debug.Log($"prevRevealedCards: {prevRevealedCards.Count}, _slot.Cards.Count: {_slot.Cards.Count}");
+            _slot.AddCards(dealCards.ToArray());
             _audioSource.PlayOneShot(Sounds.FlipCardSound);
+            Cards.RemoveRange(i + 1, dealCards.Count);
+            Manager.AddMove(() =>
+            {
+                if (_slot.Cards.Count > 0)
+                {
+                    foreach (var previousDeal in dealCards)
+                    {
+                        _slot.Cards.Remove(previousDeal);
+                    }
+                    foreach (var prevRevealedCard in prevRevealedCards)
+                    {
+                        prevRevealedCard.Revealed = true;
+                    }
+                    _slot.ReloadCards(true);
+                    dealCards.Reverse();
+                    Cards.AddRange(dealCards);
+                }
+                RefreshCards();
+                _audioSource.PlayOneShot(Sounds.DeckCardUndoSound);
+            });
+            
+            // OLD DealCard
+            // var card = Cards[^1];
+            // _slot.AddCards(card);
+            // Cards.Remove(card);
+            // _audioSource.PlayOneShot(Sounds.FlipCardSound);
+            //
+            // Manager.AddMove(() =>
+            // {
+            //     if (_slot.Cards.Count > 0)
+            //     {
+            //         var card = _slot.Cards[^1];
+            //         _slot.Cards.Remove(card);
+            //         Cards.Add(card);
+            //     }
+            //     RefreshCards();
+            //     _audioSource.PlayOneShot(Sounds.DeckCardUndoSound);
+            // });
         }
 
         private void RestartCards()
@@ -74,18 +131,18 @@ namespace Klondike
             if (Manager.DisabledInteractions) return;
             if (Cards.Count > 0)
             {
-                DealCard();
-                Manager.AddMove(() =>
-                {
-                    if (_slot.Cards.Count > 0)
-                    {
-                        var card = _slot.Cards[^1];
-                        _slot.Cards.Remove(card);
-                        Cards.Add(card);
-                    }
-                    RefreshCards();
-                    _audioSource.PlayOneShot(Sounds.DeckCardUndoSound);
-                });
+                DealFromDeck();
+                // Manager.AddMove(() =>
+                // {
+                //     if (_slot.Cards.Count > 0)
+                //     {
+                //         var card = _slot.Cards[^1];
+                //         _slot.Cards.Remove(card);
+                //         Cards.Add(card);
+                //     }
+                //     RefreshCards();
+                //     _audioSource.PlayOneShot(Sounds.DeckCardUndoSound);
+                // });
             }
             else
             {

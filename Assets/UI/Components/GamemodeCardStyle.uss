@@ -1,0 +1,70 @@
+.gamemode-card {
+    align-items: flex-start;
+    justify-content: flex-end;
+    min-height: 200px;
+    -unity-background-scale-mode: scale-and-crop;
+    min-width: 300px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+    transition-duration: 0.3s;
+    transition-timing-function: ease-in-out;
+    overflow: hidden;
+}
+
+.unity-radio-button__text {
+    margin-left: 8px;
+}
+
+.gamemode-card #title {
+    font-size: 24px;
+    -unity-font-style: bold;
+}
+
+.gamemode-card:hover {
+    -unity-background-image-tint-color: rgb(209, 209, 209);
+}
+
+.gamemode-card Button:hover {
+    scale: 1.1 1.1;
+}
+
+.gamemode-card Button {
+    background-color: rgb(226, 226, 226);
+    color: rgb(27, 27, 27);
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-right: 16px;
+    padding-left: 16px;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px;
+    border-bottom-left-radius: 16px;
+    
+    transition-duration: 0.1s;
+}
+
+.gamemode-card:hover #animated-box {
+    bottom: 0;
+}
+
+.gamemode-card #animated-box {
+    transition-duration: 0.3s;
+    bottom: -108px;
+}
+
+.gamemode-card:hover #animated-box > #difficulty, .gamemode-card:hover #animated-box >  #play {
+    opacity: 1 !important;
+}
+
+#animated-box > #difficulty, #animated-box > #play {
+    opacity: 0;
+    transition-duration: 0.3s;
+}
+
+.gamemode-card Button Label {
+    color: rgb(27, 27, 27);
+    -unity-font-style: bold;
+}

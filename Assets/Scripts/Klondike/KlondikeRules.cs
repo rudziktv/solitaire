@@ -16,7 +16,7 @@ namespace Klondike
         private KlondikeDeck _deck;
         private Card[] _cards;
         
-        public override void GameStart()
+        public override void GameStart(string args = "")
         {
             base.GameStart();
             
@@ -29,7 +29,7 @@ namespace Klondike
                     var card = Instantiate(CardPrefab, transform).GetComponent<Card>();
                     _cards[(int)s * 13 + r] = card;
                     card.Initialize(s, r + 1);
-                    Debug.Log($"Instantiate {card.name}");
+                    // Debug.Log($"Instantiate {card.name}");
                 }
             }
 
@@ -63,6 +63,9 @@ namespace Klondike
             deckObject.transform.position = deckPos;
             _deck = deckObject.AddComponent<KlondikeDeck>();
             _deck.LoadCards(_cards[MathC.Sum(7)..^0]);
+            
+            // Assign difficulty
+            _deck.DealSize = args == "hard" ? 3 : 1;
             
             // Create final slots
             _finalSlots = new KlondikeFinalSlot[4];

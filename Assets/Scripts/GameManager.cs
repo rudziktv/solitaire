@@ -34,6 +34,8 @@ public class GameManager : MonoBehaviour
     public bool Paused { get; private set; }
     
     // private GameAnimations _animations;
+
+    private string _lastGameModeArgs = string.Empty;
     
     
     private void Awake()
@@ -46,6 +48,7 @@ public class GameManager : MonoBehaviour
         
         Instance = this;
         DontDestroyOnLoad(gameObject);
+        
         
         var anims = new GameObject("Game Animations");
         anims.transform.SetParent(transform);
@@ -64,24 +67,42 @@ public class GameManager : MonoBehaviour
             Timer += Time.deltaTime;
     }
 
-    public void LoadGameMode(IGameMode gameMode)
+    public void LoadMainMenu()
     {
+        gameRules.RemoveAllBoard();
+        // gameRules = null;
+        Destroy(gameRules.gameObject);
+        SceneManager.LoadScene("Main Menu");
+        UIController.Instance.GoToMainMenu();
+    }
+
+    public void ReloadGameMode()
+    {
+        Debug.Log("Reloading game mode");
+        LoadGameMode(_lastGameModeArgs);
+    }
+
+    public void LoadGameModeAndScene(IGameMode gameMode, string args = "")
+    {
+        _lastGameModeArgs = args;
         var rules = gameMode.InitializeGameRules();
         gameRules = rules;
         // DontDestroyOnLoad(rules.gameObject);
-        SceneManager.LoadScene(0);
-        LoadGameMode();
+        SceneManager.LoadScene("SampleScene");
+        LoadGameMode(args);
     }
 
-    public void LoadGameMode()
+    public void LoadGameMode(string args = "")
     {
+        Debug.Log("Loading game mode");
+        _lastGameModeArgs = args;
         Timer = 0f;
         _undoActions.Clear();
         _redoActions.Clear();
         ActionsChanged();
         
         if (GameRules)
-            GameRules.GameStart();
+            GameRules.GameStart(args);
     }
 
     public void Escape()
