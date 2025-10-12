@@ -14,6 +14,12 @@
     overflow: hidden;
 }
 
+.mobile .gamemode-card {
+    min-width: 240px;
+    min-height: 120px;
+    margin: 24px;
+}
+
 .unity-radio-button__text {
     margin-left: 8px;
 }
@@ -46,6 +52,7 @@
     transition-duration: 0.1s;
 }
 
+.mobile .gamemode-card #animated-box,
 .gamemode-card:hover #animated-box {
     bottom: 0;
 }
@@ -55,7 +62,8 @@
     bottom: -108px;
 }
 
-.gamemode-card:hover #animated-box > #difficulty, .gamemode-card:hover #animated-box >  #play {
+.gamemode-card:hover #animated-box > #difficulty, .gamemode-card:hover #animated-box >  #play,
+.mobile .gamemode-card #animated-box > #difficulty, .mobile .gamemode-card #animated-box >  #play {
     opacity: 1 !important;
 }
 

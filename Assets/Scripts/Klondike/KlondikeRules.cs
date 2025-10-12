@@ -58,7 +58,7 @@ namespace Klondike
             }
             
             // Create deck
-            var deckObject = Instantiate(SlotPrefab, transform, true);
+            var deckObject = Instantiate(Resources.Load<GameObject>("Prefabs/Deck Prefab"), transform, true);
             var deckPos = new Vector3(-6f, 3f, -10f);
             deckObject.transform.position = deckPos;
             _deck = deckObject.AddComponent<KlondikeDeck>();

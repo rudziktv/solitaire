@@ -2,6 +2,14 @@
     margin-left: 6px;
 }
 
+.mobile #volume-box,
+.mobile #timer-box, 
+.mobile #mute,
+.mobile #settings,
+.mobile #exit-game {
+    display: none;
+}
+
 #volume-box {
     transition-duration: 0.3s;
     background-color: rgba(0, 0, 0, 0.47);

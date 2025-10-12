@@ -5,11 +5,15 @@ using System.Linq;
 using Controllers;
 using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.EnhancedTouch;
 using Utils;
+using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
 
 namespace Entities
 {
-    public class Stack : MonoBehaviour
+    public class Stack : MonoBehaviour, IPointerUpHandler
     {
         private GameManager Manager => GameManager.Instance;
         private GameRules Rules => Manager.GameRules;
@@ -39,53 +43,53 @@ namespace Entities
             // gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
         }
 
-        protected virtual void OnMouseDown()
-        {
-            _beforeDragOrder = _spriteRenderer.sortingOrder;
-            _beforeDragPosition = transform.position;
-            _spriteRenderer.sortingOrder = 999;
+        // protected virtual void OnMouseDown()
+        // {
+        //     _beforeDragOrder = _spriteRenderer.sortingOrder;
+        //     _beforeDragPosition = transform.position;
+        //     _spriteRenderer.sortingOrder = 999;
+        //
+        //     for (int i = 1; i < Cards.Count; i++)
+        //     {
+        //         var card = Cards[i];
+        //         card.GetComponent<SpriteRenderer>().sortingOrder = 999 + i;
+        //     }
+        //     
+        //     var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //     _dragOffset = transform.position - mousePos;
+        //     PickUpSound();
+        // }
 
-            for (int i = 1; i < Cards.Count; i++)
-            {
-                var card = Cards[i];
-                card.GetComponent<SpriteRenderer>().sortingOrder = 999 + i;
-            }
-            
-            var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            _dragOffset = transform.position - mousePos;
-            PickUpSound();
-        }
+        // protected virtual void OnMouseDrag()
+        // {
+        //     var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //     transform.position = mousePos + _dragOffset - Vector3.forward * 30;
+        //     
+        //     var v = transform.position;
+        //     for (int i = 1; i < Cards.Count; i++)
+        //     {
+        //         var card = Cards[i];
+        //         v -= Vector3.up * Parameters.REVEALED_CARD_GAP;
+        //         v -= Vector3.forward;
+        //         card.transform.position = v;
+        //     }
+        // }
 
-        protected virtual void OnMouseDrag()
-        {
-            var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            transform.position = mousePos + _dragOffset - Vector3.forward * 30;
-            
-            var v = transform.position;
-            for (int i = 1; i < Cards.Count; i++)
-            {
-                var card = Cards[i];
-                v -= Vector3.up * Parameters.REVEALED_CARD_GAP;
-                v -= Vector3.forward;
-                card.transform.position = v;
-            }
-        }
-
-        protected virtual void OnMouseUp()
-        {
-            if (CardAutoMove()) return;
-            if (Cancel) return;
-
-            // var currentLayer = gameObject.layer;
-            var slot = DroppableSlot();
-            if (slot != null)
-            {
-                OnDropSuccess(slot);
-                return;
-            }
-            
-            OnDropFail();
-        }
+        // protected virtual void OnMouseUp()
+        // {
+        //     if (CardAutoMove()) return;
+        //     if (Cancel) return;
+        //
+        //     // var currentLayer = gameObject.layer;
+        //     var slot = DroppableSlot();
+        //     if (slot != null)
+        //     {
+        //         OnDropSuccess(slot);
+        //         return;
+        //     }
+        //     
+        //     OnDropFail();
+        // }
 
         protected virtual bool CardAutoMove()
         {
@@ -199,6 +203,103 @@ namespace Entities
             if (Cancel) return;
             Cards.First().Slot.ReloadCards();
             Destroy(this);
+        }
+
+        // INSTEAD OF OnPointerDown/OnMouseDown
+        private void Start()
+        {
+            Debug.Log($"Start Stack: {name}");
+            _beforeDragOrder = _spriteRenderer.sortingOrder;
+            _beforeDragPosition = transform.position;
+            _spriteRenderer.sortingOrder = 999;
+
+            for (int i = 1; i < Cards.Count; i++)
+            {
+                var card = Cards[i];
+                card.GetComponent<SpriteRenderer>().sortingOrder = 999 + i;
+            }
+            
+            // var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition); OLD Input Manager
+            // NEW InputSystem
+            var mousePos = Camera.main.ScreenToWorldPoint(PointerUtils.GetPointerPosition());
+            _dragOffset = transform.position - mousePos;
+            PickUpSound();
+        }
+
+        // public virtual void OnPointerDown(PointerEventData eventData)
+        // {
+        //     Debug.Log($"OnPointerDown Stack: {name}");
+        //     _beforeDragOrder = _spriteRenderer.sortingOrder;
+        //     _beforeDragPosition = transform.position;
+        //     _spriteRenderer.sortingOrder = 999;
+        //
+        //     for (int i = 1; i < Cards.Count; i++)
+        //     {
+        //         var card = Cards[i];
+        //         card.GetComponent<SpriteRenderer>().sortingOrder = 999 + i;
+        //     }
+        //     
+        //     // var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition); OLD Input Manager
+        //     // NEW InputSystem
+        //     var mousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        //     _dragOffset = transform.position - mousePos;
+        //     PickUpSound();
+        // }
+
+        public virtual void OnPointerUp(PointerEventData eventData)
+        {
+            // Debug.Log($"OnPointerUp Stack: {name}");
+            
+            if (CardAutoMove()) return;
+            if (Cancel) return;
+
+            // var currentLayer = gameObject.layer;
+            var slot = DroppableSlot();
+            if (slot != null)
+            {
+                OnDropSuccess(slot);
+                return;
+            }
+            
+            OnDropFail();
+        }
+
+        // public virtual void OnDrag(PointerEventData eventData)
+        // {
+        //     Debug.Log($"OnDrag Stack: {name}");
+        //     
+        //     // var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition); OLD Input Manager
+        //     // NEW InputSystem
+        //     var mousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        //     transform.position = mousePos + _dragOffset - Vector3.forward * 30;
+        //     
+        //     var v = transform.position;
+        //     for (int i = 1; i < Cards.Count; i++)
+        //     {
+        //         var card = Cards[i];
+        //         v -= Vector3.up * Parameters.REVEALED_CARD_GAP;
+        //         v -= Vector3.forward;
+        //         card.transform.position = v;
+        //     }
+        // }
+
+        public virtual void Update()
+        {
+            // Debug.Log($"Update Stack: {name}, {Mouse.current.position.ReadValue()}");
+            
+            // var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition); OLD Input Manager
+            // NEW InputSystem
+            var mousePos = Camera.main.ScreenToWorldPoint(PointerUtils.GetPointerPosition());
+            transform.position = mousePos + _dragOffset - Vector3.forward * 30;
+            
+            var v = transform.position;
+            for (int i = 1; i < Cards.Count; i++)
+            {
+                var card = Cards[i];
+                v -= Vector3.up * Parameters.REVEALED_CARD_GAP;
+                v -= Vector3.forward;
+                card.transform.position = v;
+            }
         }
     }
 }

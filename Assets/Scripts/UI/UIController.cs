@@ -35,6 +35,11 @@ namespace UI
             _uiDocument = GetComponent<UIDocument>();
             // _currentModel = new UIMainMenuModel(this, Root);
             // ChangeModel(new UIMainMenuModel(this, Root));
+            #if UNITY_ANDROID
+            Root.AddToClassList("mobile");
+            #endif
+            
+            
             GoToMainMenu();
         }
 

@@ -5,10 +5,11 @@ using Controllers;
 using Entities;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Klondike
 {
-    public class KlondikeDeck : Deck
+    public class KlondikeDeck : Deck, IPointerClickHandler, IPointerEnterHandler, IPointerDownHandler
     {
         public int DealSize { get; set; } = 3;
         
@@ -51,14 +52,6 @@ namespace Klondike
                 dealCards.Add(Cards[i]);
                 Cards[i].Revealed = true;
             }
-            // Debug.Log(i);
-            var prevRevealedCards = new List<Card>();
-            for (int j = _slot.Cards.Count - 1; j >= 0 && _slot.Cards.Count - 1 - j < DealSize; j--)
-            {
-                if (_slot.Cards[j].Revealed)
-                    prevRevealedCards.Add(_slot.Cards[j]);
-            }
-            // Debug.Log($"prevRevealedCards: {prevRevealedCards.Count}, _slot.Cards.Count: {_slot.Cards.Count}");
             _slot.AddCards(dealCards.ToArray());
             _audioSource.PlayOneShot(Sounds.FlipCardSound);
             Cards.RemoveRange(i + 1, dealCards.Count);
@@ -69,10 +62,6 @@ namespace Klondike
                     foreach (var previousDeal in dealCards)
                     {
                         _slot.Cards.Remove(previousDeal);
-                    }
-                    foreach (var prevRevealedCard in prevRevealedCards)
-                    {
-                        prevRevealedCard.Revealed = true;
                     }
                     _slot.ReloadCards(true);
                     dealCards.Reverse();
@@ -126,23 +115,54 @@ namespace Klondike
             }
         }
 
-        private void OnMouseUpAsButton()
+        // private void OnMouseUpAsButton()
+        // {
+        //     if (Manager.DisabledInteractions) return;
+        //     if (Cards.Count > 0)
+        //     {
+        //         DealFromDeck();
+        //         // Manager.AddMove(() =>
+        //         // {
+        //         //     if (_slot.Cards.Count > 0)
+        //         //     {
+        //         //         var card = _slot.Cards[^1];
+        //         //         _slot.Cards.Remove(card);
+        //         //         Cards.Add(card);
+        //         //     }
+        //         //     RefreshCards();
+        //         //     _audioSource.PlayOneShot(Sounds.DeckCardUndoSound);
+        //         // });
+        //     }
+        //     else
+        //     {
+        //         RestartCards();
+        //         Manager.AddMove(() =>
+        //         {
+        //             Cards.Reverse();
+        //             _slot.AddCards(Cards.ToArray());
+        //             foreach (var card in _slot.Cards)
+        //             {
+        //                 card.FlipCard(true, true);
+        //             }
+        //             Cards.Clear();
+        //             _audioSource.PlayOneShot(Sounds.ResetDeckUndoSound);
+        //         });
+        //     }
+        // }
+
+        private void OnDestroy()
         {
+            Destroy(_slot.gameObject);
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            Debug.Log($"OnPointerClick KlondikeDeck: {name}");
+            
             if (Manager.DisabledInteractions) return;
             if (Cards.Count > 0)
             {
                 DealFromDeck();
-                // Manager.AddMove(() =>
-                // {
-                //     if (_slot.Cards.Count > 0)
-                //     {
-                //         var card = _slot.Cards[^1];
-                //         _slot.Cards.Remove(card);
-                //         Cards.Add(card);
-                //     }
-                //     RefreshCards();
-                //     _audioSource.PlayOneShot(Sounds.DeckCardUndoSound);
-                // });
             }
             else
             {
@@ -161,9 +181,14 @@ namespace Klondike
             }
         }
 
-        private void OnDestroy()
+        public void OnPointerEnter(PointerEventData eventData)
         {
-            Destroy(_slot.gameObject);
+            Debug.Log($"OnPointerEnter KlondikeDeck: {name}");
+        }
+
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            Debug.Log($"OnPointerDown KlondikeDeck: {name}");
         }
     }
 }

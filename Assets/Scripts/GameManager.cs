@@ -5,6 +5,8 @@ using Controllers;
 using Modes;
 using UI;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.EnhancedTouch;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -48,6 +50,7 @@ public class GameManager : MonoBehaviour
         
         Instance = this;
         DontDestroyOnLoad(gameObject);
+        EnhancedTouchSupport.Enable();
         
         
         var anims = new GameObject("Game Animations");

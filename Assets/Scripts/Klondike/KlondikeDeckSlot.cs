@@ -19,7 +19,7 @@ namespace Klondike
             base.PreReloadCardFunction();
             for (int i = 0; i < Cards.Count; i++)
             {
-                Cards[i].FlipCard(Cards.Count - 1 - i < DealSize && Cards[i].Revealed, true);
+                Cards[i].FlipCard(Cards.Count - 1 - i < DealSize, true);
             }
         }
 

@@ -3,10 +3,11 @@ using System.Collections;
 using Cards;
 using Controllers;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Entities
 {
-    public class Card : MonoBehaviour
+    public class Card : MonoBehaviour, IPointerDownHandler
     {
         private static readonly int FlipCardAnim = Animator.StringToHash("Flip Card");
         GameManager Manager => GameManager.Instance;
@@ -109,12 +110,21 @@ namespace Entities
             return $"Sprites/Cards/card{Suit.ToString()}{rank}";
         }
 
-        private void OnMouseDown()
+        // private void OnMouseDown()
+        // {
+        //     // Create stack if suitable
+        //     // if (!Revealed || !Slot.IsStackable(this) || Manager.DisabledInteractions) return;
+        //     // Slot.OnStackGrab(this);
+        //     // _stack = Slot.OnStackGrab(this);
+        // }
+
+
+        public void OnPointerDown(PointerEventData eventData)
         {
+            Debug.Log($"OnPointerDown Card: {name}");
             // Create stack if suitable
             if (!Revealed || !Slot.IsStackable(this) || Manager.DisabledInteractions) return;
             Slot.OnStackGrab(this);
-            // _stack = Slot.OnStackGrab(this);
         }
     }
 }
