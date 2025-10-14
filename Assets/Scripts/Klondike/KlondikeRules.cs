@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Cards;
 using Entities;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Utils;
 using Stack = Entities.Stack;
 
@@ -31,7 +29,6 @@ namespace Klondike
                     var card = Instantiate(CardPrefab, transform).AddComponent<KlondikeCard>();
                     _cards[(int)s * 13 + r] = card;
                     card.Initialize(s, r + 1);
-                    // Debug.Log($"Instantiate {card.name}");
                 }
             }
 
@@ -54,7 +51,6 @@ namespace Klondike
                 
                 var s = MathC.Sum(i);
                 slotScript.AddCards(_cards[s..(s + i + 1)]);
-                // Debug.Log($"{slot.name}: {s}, {s + i + 1}");
                 
                 pos.x += 2f;
             }
@@ -174,7 +170,6 @@ namespace Klondike
         {
             foreach (var card in sortedCards)
             {
-                Debug.Log(card);
                 if (card.AutoMove())
                     yield return new WaitForSeconds(Manager.AutoMoveDelay);
                 else
