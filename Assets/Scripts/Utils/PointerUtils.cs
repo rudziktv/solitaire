@@ -8,7 +8,9 @@ namespace Utils
     {
         public static Vector2 GetPointerPosition()
         {
-            return Touch.activeTouches.Count > 0 ? Touch.activeTouches[0].screenPosition : Mouse.current.position.ReadValue();
+            // Debug.Log("Pointer Position: " + Pointer.current.position.ReadValue());
+            // return Touch.activeTouches.Count > 0 ? Touch.activeTouches[0].screenPosition : Mouse.current.position.ReadValue();
+            return Pointer.current.position.ReadValue();
         }
     }
 }
