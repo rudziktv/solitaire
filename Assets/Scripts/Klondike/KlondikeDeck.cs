@@ -9,14 +9,15 @@ using UnityEngine.EventSystems;
 
 namespace Klondike
 {
-    public class KlondikeDeck : Deck, IPointerClickHandler, IPointerEnterHandler, IPointerDownHandler
+    public class KlondikeDeck : Deck, IPointerClickHandler
     {
         public int DealSize { get; set; } = 3;
         
         private static GameSounds Sounds => GameSounds.Instance;
-        private KlondikeDeckSlot _slot;
+        
         private List<Card> Cards { get; } = new();
-
+        
+        private KlondikeDeckSlot _slot;
         private AudioSource _audioSource;
         
         private void Start()
@@ -70,24 +71,6 @@ namespace Klondike
                 RefreshCards();
                 _audioSource.PlayOneShot(Sounds.DeckCardUndoSound);
             });
-            
-            // OLD DealCard
-            // var card = Cards[^1];
-            // _slot.AddCards(card);
-            // Cards.Remove(card);
-            // _audioSource.PlayOneShot(Sounds.FlipCardSound);
-            //
-            // Manager.AddMove(() =>
-            // {
-            //     if (_slot.Cards.Count > 0)
-            //     {
-            //         var card = _slot.Cards[^1];
-            //         _slot.Cards.Remove(card);
-            //         Cards.Add(card);
-            //     }
-            //     RefreshCards();
-            //     _audioSource.PlayOneShot(Sounds.DeckCardUndoSound);
-            // });
         }
 
         private void RestartCards()
@@ -115,46 +98,12 @@ namespace Klondike
             }
         }
 
-        // private void OnMouseUpAsButton()
-        // {
-        //     if (Manager.DisabledInteractions) return;
-        //     if (Cards.Count > 0)
-        //     {
-        //         DealFromDeck();
-        //         // Manager.AddMove(() =>
-        //         // {
-        //         //     if (_slot.Cards.Count > 0)
-        //         //     {
-        //         //         var card = _slot.Cards[^1];
-        //         //         _slot.Cards.Remove(card);
-        //         //         Cards.Add(card);
-        //         //     }
-        //         //     RefreshCards();
-        //         //     _audioSource.PlayOneShot(Sounds.DeckCardUndoSound);
-        //         // });
-        //     }
-        //     else
-        //     {
-        //         RestartCards();
-        //         Manager.AddMove(() =>
-        //         {
-        //             Cards.Reverse();
-        //             _slot.AddCards(Cards.ToArray());
-        //             foreach (var card in _slot.Cards)
-        //             {
-        //                 card.FlipCard(true, true);
-        //             }
-        //             Cards.Clear();
-        //             _audioSource.PlayOneShot(Sounds.ResetDeckUndoSound);
-        //         });
-        //     }
-        // }
-
         private void OnDestroy()
         {
             Destroy(_slot.gameObject);
         }
 
+        // replacing OnMouseUpAsButton
         public void OnPointerClick(PointerEventData eventData)
         {
             Debug.Log($"OnPointerClick KlondikeDeck: {name}");
@@ -179,16 +128,6 @@ namespace Klondike
                     _audioSource.PlayOneShot(Sounds.ResetDeckUndoSound);
                 });
             }
-        }
-
-        public void OnPointerEnter(PointerEventData eventData)
-        {
-            Debug.Log($"OnPointerEnter KlondikeDeck: {name}");
-        }
-
-        public void OnPointerDown(PointerEventData eventData)
-        {
-            Debug.Log($"OnPointerDown KlondikeDeck: {name}");
         }
     }
 }

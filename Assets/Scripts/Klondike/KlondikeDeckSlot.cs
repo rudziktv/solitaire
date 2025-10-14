@@ -10,7 +10,6 @@ namespace Klondike
         
         public override bool IsStackable(Card startingCard)
         {
-            // return base.IsStackable(startingCard);
             return startingCard == Cards.Last();
         }
 

@@ -12,33 +12,28 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    private static UIManager UI => UIManager.Instance;
+    
     [SerializeField] private GameRules gameRules;
     [SerializeField] private Sprite backCardSprite;
     [SerializeField] private GameObject cardPrefab;
     [SerializeField] private GameObject slotPrefab;
+    
+    public bool Paused { get; private set; }
+    public float Timer { get; private set; }
+    public bool DisabledInteractions { get; set; }
+    
     public GameRules GameRules => gameRules;
+    public GameObject SlotPrefab => slotPrefab;
+    public GameObject CardPrefab => cardPrefab;
     public Sprite BackCardSprite => backCardSprite;
 
-    private UIManager UI => UIManager.Instance;
-    public bool DisabledInteractions { get; set; }
-    public GameObject CardPrefab => cardPrefab;
-    public GameObject SlotPrefab => slotPrefab;
-
-    public float Timer { get; private set; }
-    // public bool Paused { get; set; }
+    public event OnActionsChangedArgs OnActionsChanged;
+    public delegate void OnActionsChangedArgs(bool isUndoNotEmpty, bool isRedoNotEmpty);
     
+    private string _lastGameModeArgs = string.Empty;
     private readonly List<Action> _undoActions = new();
     private readonly List<Action> _redoActions = new();
-    
-    public delegate void OnActionsChangedArgs(bool isUndoNotEmpty, bool isRedoNotEmpty);
-    public event OnActionsChangedArgs OnActionsChanged;
-
-    public bool Paused { get; private set; }
-    
-    // private GameAnimations _animations;
-
-    private string _lastGameModeArgs = string.Empty;
-    
     
     private void Awake()
     {
@@ -52,7 +47,7 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         EnhancedTouchSupport.Enable();
         
-        // TODO create handling of high refresh ratio
+        // handling of native refresh rate on Android devices
         #if UNITY_ANDROID
         var refreshRate = Screen.currentResolution.refreshRateRatio.value;
         Application.targetFrameRate = (int)refreshRate;
@@ -60,7 +55,6 @@ public class GameManager : MonoBehaviour
         
         var anims = new GameObject("Game Animations");
         anims.transform.SetParent(transform);
-        // _animations = anims.AddComponent<GameAnimations>();
         anims.AddComponent<GameAnimations>();
     }
 
@@ -78,7 +72,6 @@ public class GameManager : MonoBehaviour
     public void LoadMainMenu()
     {
         gameRules.RemoveAllBoard();
-        // gameRules = null;
         Destroy(gameRules.gameObject);
         SceneManager.LoadScene("Main Menu");
         UIController.Instance.GoToMainMenu();
@@ -95,7 +88,6 @@ public class GameManager : MonoBehaviour
         _lastGameModeArgs = args;
         var rules = gameMode.InitializeGameRules();
         gameRules = rules;
-        // DontDestroyOnLoad(rules.gameObject);
         SceneManager.LoadScene("SampleScene");
         LoadGameMode(args);
     }
@@ -130,8 +122,6 @@ public class GameManager : MonoBehaviour
     {
         _undoActions.Add(undoMove);
         _redoActions.Clear();
-        
-        // Debug.Log($"Undo moves: {_undoActions.Count}");
         ActionsChanged();
     }
 
@@ -142,7 +132,6 @@ public class GameManager : MonoBehaviour
         _undoActions.RemoveAt(_undoActions.Count - 1);
         action.Invoke();
         _redoActions.Add(action);
-        // Debug.Log($"Undo moves: {_undoActions.Count}");
         ActionsChanged();
     }
 

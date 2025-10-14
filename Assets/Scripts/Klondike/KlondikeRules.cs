@@ -9,8 +9,6 @@ namespace Klondike
 {
     public class KlondikeRules : GameRules
     {
-        // [SerializeField] private GameObject slotPrefab;
-
         private KlondikeFinalSlot[] _finalSlots;
         private KlondikeSlot[] _slots;
         private KlondikeDeck _deck;
@@ -18,7 +16,7 @@ namespace Klondike
         
         public override void GameStart(string args = "")
         {
-            base.GameStart();
+            base.GameStart(args);
             
             // Create cards for board
             _cards = new Card[52];
@@ -136,10 +134,6 @@ namespace Klondike
                 stack.Cancel = true;
                 stack.OnDropSuccess(finalSlot);
                 return;
-                // Debug.Log("Stack can be dropped");
-                // finalSlot.ReloadCards();
-                // finalSlot.OnStackDrop(stack);
-                // stack.OnSuccess.Invoke();
             }
             
             stack.OnDropFail();

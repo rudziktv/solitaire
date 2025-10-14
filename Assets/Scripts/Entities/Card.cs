@@ -43,8 +43,7 @@ namespace Entities
         private AudioSource _audioSource;
         
         public event Action<Card> OnMovementEnd;
-
-        // private Stack _stack;
+        
 
         public void SwitchSuit()
         {
@@ -88,7 +87,6 @@ namespace Entities
                 _spriteRenderer.sortingOrder = 999;
             while (transform.position != config.Target)
             {
-                // Debug.Log($"move-coroutine {name}");
                 transform.position = Animations.AnimatedMove(origin, config.Target, time);
                 yield return new WaitForEndOfFrame();
                 time += Time.deltaTime;
@@ -110,18 +108,11 @@ namespace Entities
             return $"Sprites/Cards/card{Suit.ToString()}{rank}";
         }
 
-        // private void OnMouseDown()
-        // {
-        //     // Create stack if suitable
-        //     // if (!Revealed || !Slot.IsStackable(this) || Manager.DisabledInteractions) return;
-        //     // Slot.OnStackGrab(this);
-        //     // _stack = Slot.OnStackGrab(this);
-        // }
-
-
+        // replacing OnMouseDown
         public void OnPointerDown(PointerEventData eventData)
         {
-            Debug.Log($"OnPointerDown Card: {name}");
+            // Debug.Log($"OnPointerDown Card: {name}");
+            
             // Create stack if suitable
             if (!Revealed || !Slot.IsStackable(this) || Manager.DisabledInteractions) return;
             Slot.OnStackGrab(this);

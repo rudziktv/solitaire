@@ -90,11 +90,8 @@ namespace Entities
             };
             
             
-            stack.Undo = (newSlot) =>
+            stack.Undo = newSlot =>
             {
-                
-                
-                // var start = newSlot.Cards.IndexOf(startingCard) - selectedCards.Count - 1;
                 var start = newSlot.Cards.Count - selectedCards.Count;
                 start = Mathf.Clamp(start, 0, newSlot.Cards.Count - 1);
                 newSlot.Cards.RemoveRange(start, selectedCards.Count);
