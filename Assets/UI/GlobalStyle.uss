@@ -26,6 +26,7 @@ Label {
 }
 
 Button {
+    position: relative;
     color: rgb(11, 20, 30);
     background-color: rgb(98, 144, 195);
     border-top-width: 0;
@@ -57,6 +58,14 @@ Button > Label {
     padding-bottom: 0;
     padding-left: 0;
     color: rgb(11, 20, 30);
+}
+
+Button .after-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }
 
 .after {
