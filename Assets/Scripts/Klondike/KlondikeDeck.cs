@@ -14,7 +14,8 @@ namespace Klondike
         public int DealSize { get; set; } = 3;
         
         private static GameSounds Sounds => GameSounds.Instance;
-        
+
+        public int TotalCardsCount => Cards.Count + _slot.Cards.Count;
         private List<Card> Cards { get; } = new();
         
         private KlondikeDeckSlot _slot;
@@ -91,9 +92,7 @@ namespace Klondike
             {
                 var card = Cards[i];
                 card.Revealed = false;
-                // card.transform.position = vector;
                 card.MoveTo(new(vector, i + 1, true));
-                // card.GetComponent<SpriteRenderer>().sortingOrder = ;
                 card.Slot = null;
             }
         }
@@ -106,9 +105,9 @@ namespace Klondike
         // replacing OnMouseUpAsButton
         public void OnPointerClick(PointerEventData eventData)
         {
-            Debug.Log($"OnPointerClick KlondikeDeck: {name}");
+            // Debug.Log($"OnPointerClick KlondikeDeck: {name}");
             
-            if (Manager.DisabledInteractions) return;
+            if (Manager.DisableInteractions) return;
             if (Cards.Count > 0)
             {
                 DealFromDeck();

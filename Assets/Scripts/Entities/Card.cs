@@ -112,10 +112,22 @@ namespace Entities
         public void OnPointerDown(PointerEventData eventData)
         {
             // Debug.Log($"OnPointerDown Card: {name}");
-            
+            TryCreateStack();
+        }
+
+        public bool AutoMove()
+        {
+            if (!Revealed || !Slot.IsStackable(this)) return false;
+            Slot.OnStackGrab(this, true);
+            return true;
+        }
+
+        protected bool TryCreateStack(bool automove = false)
+        {
             // Create stack if suitable
-            if (!Revealed || !Slot.IsStackable(this) || Manager.DisabledInteractions) return;
-            Slot.OnStackGrab(this);
+            if (!Revealed || !Slot.IsStackable(this) || Manager.DisableInteractions) return false;
+            Slot.OnStackGrab(this, automove);
+            return true;
         }
     }
 }

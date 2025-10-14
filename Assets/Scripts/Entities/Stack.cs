@@ -39,6 +39,7 @@ namespace Entities
 
         protected virtual bool CardAutoMove()
         {
+            Debug.Log($"CardAutoMove {name}");
             var oldPos = _beforeDragPosition;
             oldPos.z = transform.position.z;
             if (!((oldPos - transform.position).magnitude < Parameters.CARD_DISTANCE_SOUND_THRESHOLD)) return false;
@@ -138,6 +139,7 @@ namespace Entities
             
             if (Undo != null)
                 Manager.AddMove(() => Undo.Invoke(slot));
+            Manager.GameRules.OnStackMove(this);
             
             Destroy(this);
         }
@@ -201,6 +203,16 @@ namespace Entities
                 v -= Vector3.forward;
                 card.transform.position = v;
             }
+        }
+
+        public virtual void AutoMove()
+        {
+            _beforeDragPosition = transform.position;
+            
+            if (CardAutoMove()) return;
+            if (Cancel) return;
+            
+            OnDropFail();
         }
     }
 }

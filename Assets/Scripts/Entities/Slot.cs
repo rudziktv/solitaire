@@ -77,7 +77,7 @@ namespace Entities
             }
         }
 
-        public virtual Stack OnStackGrab(Card startingCard)
+        public virtual Stack OnStackGrab(Card startingCard, bool automove = false)
         {
             var startIndex = Cards.IndexOf(startingCard);
             var stack = startingCard.AddComponent<Stack>();
@@ -114,6 +114,9 @@ namespace Entities
                     };
                 }
             }
+            
+            if (automove)
+                stack.AutoMove();
             
             return stack;
         }

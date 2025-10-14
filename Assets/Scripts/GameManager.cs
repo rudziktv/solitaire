@@ -18,10 +18,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Sprite backCardSprite;
     [SerializeField] private GameObject cardPrefab;
     [SerializeField] private GameObject slotPrefab;
+
+    public float AutoMoveDelay = 3f;
     
     public bool Paused { get; private set; }
     public float Timer { get; private set; }
-    public bool DisabledInteractions { get; set; }
+    public bool DisableInteractions { get; set; }
     
     public GameRules GameRules => gameRules;
     public GameObject SlotPrefab => slotPrefab;
@@ -114,7 +116,7 @@ public class GameManager : MonoBehaviour
     public void SetPauseGame(bool paused)
     {
         Paused = paused;
-        DisabledInteractions = paused;
+        DisableInteractions = paused;
         Time.timeScale = paused ? 0 : 1;
     }
 
@@ -132,6 +134,7 @@ public class GameManager : MonoBehaviour
         _undoActions.RemoveAt(_undoActions.Count - 1);
         action.Invoke();
         _redoActions.Add(action);
+        GameRules.RefreshGetItDone();
         ActionsChanged();
     }
 

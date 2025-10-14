@@ -1,9 +1,13 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using Cards;
 using Entities;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Utils;
+using Stack = Entities.Stack;
 
 namespace Klondike
 {
@@ -12,19 +16,19 @@ namespace Klondike
         private KlondikeFinalSlot[] _finalSlots;
         private KlondikeSlot[] _slots;
         private KlondikeDeck _deck;
-        private Card[] _cards;
+        private KlondikeCard[] _cards;
         
         public override void GameStart(string args = "")
         {
             base.GameStart(args);
             
             // Create cards for board
-            _cards = new Card[52];
+            _cards = new KlondikeCard[52];
             for (var s = (Suit)0; s < (Suit)4; s++)
             {
                 for (var r = 0; r < 13; r++)
                 {
-                    var card = Instantiate(CardPrefab, transform).GetComponent<Card>();
+                    var card = Instantiate(CardPrefab, transform).AddComponent<KlondikeCard>();
                     _cards[(int)s * 13 + r] = card;
                     card.Initialize(s, r + 1);
                     // Debug.Log($"Instantiate {card.name}");
@@ -137,6 +141,49 @@ namespace Klondike
             }
             
             stack.OnDropFail();
+        }
+
+        public override void OnStackMove(Stack stack)
+        {
+            base.OnStackMove(stack);
+            TryInvokeOnGetItDoneChanged(IsPossibleToGetItDone());
+        }
+
+        public override bool IsPossibleToGetItDone()
+        {
+            if (_deck.TotalCardsCount != 0) return false;
+            if (_slots.Any(klondikeSlot => klondikeSlot.Cards.Any(card => !card.Revealed)))
+                return false;
+            return true;
+        }
+
+        public override void GetItDone()
+        {
+            base.GetItDone();
+            if (!IsPossibleToGetItDone()) return;
+
+            var cards = new List<Card>();
+            cards.AddRange(_slots.SelectMany(slot => slot.Cards));
+            cards.Sort((c1, c2) => c1.Value.CompareTo(c2.Value));
+            StartCoroutine(GetItDoneCoroutine(cards));
+
+            Manager.DisableInteractions = true;
+        }
+
+        private IEnumerator GetItDoneCoroutine(List<Card> sortedCards)
+        {
+            foreach (var card in sortedCards)
+            {
+                Debug.Log(card);
+                if (card.AutoMove())
+                    yield return new WaitForSeconds(Manager.AutoMoveDelay);
+                else
+                {
+                    Manager.DisableInteractions = false;
+                    yield break;
+                }
+            }
+            
         }
     }
 }
