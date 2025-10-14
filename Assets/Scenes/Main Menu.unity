@@ -482,6 +482,7 @@ MonoBehaviour:
   backCardSprite: {fileID: 21300000, guid: 431a21149e6b6e6e695243d52123f56c, type: 3}
   cardPrefab: {fileID: 1126726911683206789, guid: a49484675fff8cc399c7443d28dbb48c, type: 3}
   slotPrefab: {fileID: 5798312345092717683, guid: 14d5bf71ebe41f555985a9af09f079a2, type: 3}
+  AutoMoveDelay: 0.4
 --- !u!4 &2126822967
 Transform:
   m_ObjectHideFlags: 0
