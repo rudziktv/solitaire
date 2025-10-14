@@ -52,6 +52,11 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         EnhancedTouchSupport.Enable();
         
+        // TODO create handling of high refresh ratio
+        #if UNITY_ANDROID
+        var refreshRate = Screen.currentResolution.refreshRateRatio.value;
+        Application.targetFrameRate = (int)refreshRate;
+        #endif
         
         var anims = new GameObject("Game Animations");
         anims.transform.SetParent(transform);
