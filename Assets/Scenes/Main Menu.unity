@@ -395,10 +395,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1684222451644777749, guid: 89b3163451ec9729584f4191ccd4b9e0, type: 3}
-      propertyPath: m_PointerBehavior
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 8053482584677196040, guid: 89b3163451ec9729584f4191ccd4b9e0, type: 3}
       propertyPath: m_Name
       value: EventSystem
