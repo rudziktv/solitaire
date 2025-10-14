@@ -36,6 +36,15 @@ namespace UI.Models
             var settings = View.Q<Button>("settings");
             settings.SetEnabled(false);
             
+            var getItDone = View.Q<Button>("get-it-done");
+            getItDone.SetEnabled(false);
+            Manager.GameRules.OnGetItDoneChanged += possible =>
+            {
+                getItDone.SetEnabled(possible);
+            };
+            getItDone.clicked += Manager.GameRules.GetItDone;
+            
+            
             menu.clicked += GameManager.Instance.LoadMainMenu;
             res.clicked += Manager.ReloadGameMode;
             exit.clicked += Application.Quit;

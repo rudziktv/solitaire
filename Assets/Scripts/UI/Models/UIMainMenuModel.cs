@@ -1,5 +1,6 @@
 using Modes;
 using UI.Components;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
@@ -26,6 +27,12 @@ namespace UI.Models
 
                 // SceneManager.LoadScene(0);
             }
+            
+            var exit = View.Q<Button>("exit");
+            exit.clicked += Application.Quit;
+            
+            var settings = View.Q<Button>("settings");
+            settings.SetEnabled(false);
         }
     }
 }
