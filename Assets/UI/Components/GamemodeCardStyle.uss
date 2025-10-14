@@ -29,7 +29,8 @@
     -unity-font-style: bold;
 }
 
-.gamemode-card:hover {
+.gamemode-card:hover,
+.mobile .gamemode-card {
     -unity-background-image-tint-color: rgb(209, 209, 209);
 }
 
