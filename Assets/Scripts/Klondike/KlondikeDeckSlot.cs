@@ -8,7 +8,7 @@ namespace Klondike
     {
         public int DealSize { get; set; } = 1;
         
-        public override bool IsStackable(Card startingCard)
+        public override bool IsStackable<T>(T startingCard)
         {
             return startingCard == Cards.Last();
         }

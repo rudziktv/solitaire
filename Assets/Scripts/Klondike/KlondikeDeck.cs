@@ -37,7 +37,7 @@ namespace Klondike
             _slot.RevealedGap = 0.3f;
         }
 
-        public void LoadCards(Card[] cards)
+        public void LoadCards<T>(T[] cards) where T : Card
         {
             Cards.AddRange(cards);
             RefreshCards();

@@ -8,7 +8,7 @@ namespace Klondike
 {
     public class KlondikeSlot : Slot
     {
-        public override bool IsStackable(Card startingCard)
+        public override bool IsStackable<T>(T startingCard)
         {
             var startIndex = Cards.IndexOf(startingCard);
             if (Cards.Count - startIndex <= 1) return true;
