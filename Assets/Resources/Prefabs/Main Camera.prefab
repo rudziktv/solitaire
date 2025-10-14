@@ -152,5 +152,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.EventSystems.Physics2DRaycaster
   m_EventMask:
     serializedVersion: 2
-    m_Bits: 19
+    m_Bits: 51
   m_MaxRayIntersections: 0

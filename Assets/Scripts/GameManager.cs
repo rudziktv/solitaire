@@ -36,6 +36,8 @@ public class GameManager : MonoBehaviour
     private string _lastGameModeArgs = string.Empty;
     private readonly List<Action> _undoActions = new();
     private readonly List<Action> _redoActions = new();
+    private int _screenWidth;
+    private int _screenHeight;
     
     private void Awake()
     {
@@ -58,6 +60,8 @@ public class GameManager : MonoBehaviour
         var anims = new GameObject("Game Animations");
         anims.transform.SetParent(transform);
         anims.AddComponent<GameAnimations>();
+        
+        CalculateScreenRatio();
     }
 
     private void Start()
@@ -69,6 +73,18 @@ public class GameManager : MonoBehaviour
     {
         if (!Paused)
             Timer += Time.deltaTime;
+        CalculateScreenRatio();
+    }
+
+    private void CalculateScreenRatio()
+    {
+        if (_screenWidth == Screen.width && _screenHeight == Screen.height) return;
+        
+        _screenWidth = Screen.width;
+        _screenHeight = Screen.height;
+        
+        var ratio = Screen.width / (float)Screen.height;
+        Camera.main.orthographicSize = Mathf.Lerp(6f, 5f, Mathf.InverseLerp(1.4f, 1.7f, ratio));
     }
 
     public void LoadMainMenu()
