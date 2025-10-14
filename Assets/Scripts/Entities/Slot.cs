@@ -40,13 +40,13 @@ namespace Entities
 
         protected virtual void Start() { }
 
-        public virtual void AddCards(params Card[] cards)
+        public virtual void AddCards<T>(params T[] cards) where T : Card
         {
             Cards.AddRange(cards);
             ReloadCards(true);
         }
 
-        public virtual bool IsStackable(Card startingCard)
+        public virtual bool IsStackable<T>(T startingCard) where T : Card
         {
             return true;
         }

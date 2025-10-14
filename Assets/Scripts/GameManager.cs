@@ -81,7 +81,7 @@ public class GameManager : MonoBehaviour
 
     public void ReloadGameMode()
     {
-        Debug.Log("Reloading game mode");
+        // Debug.Log("Reloading game mode");
         LoadGameMode(_lastGameModeArgs);
     }
 
@@ -96,7 +96,7 @@ public class GameManager : MonoBehaviour
 
     public void LoadGameMode(string args = "")
     {
-        Debug.Log("Loading game mode");
+        // Debug.Log("Loading game mode");
         _lastGameModeArgs = args;
         Timer = 0f;
         _undoActions.Clear();

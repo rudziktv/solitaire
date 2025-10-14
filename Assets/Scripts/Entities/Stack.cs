@@ -39,7 +39,7 @@ namespace Entities
 
         protected virtual bool CardAutoMove()
         {
-            Debug.Log($"CardAutoMove {name}");
+            // Debug.Log($"CardAutoMove {name}");
             var oldPos = _beforeDragPosition;
             oldPos.z = transform.position.z;
             if (!((oldPos - transform.position).magnitude < Parameters.CARD_DISTANCE_SOUND_THRESHOLD)) return false;
