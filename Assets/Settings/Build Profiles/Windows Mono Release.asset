@@ -165,7 +165,7 @@ MonoBehaviour:
     - line: '|   loadStoreDebugModeEnabled: 0'
     - line: '|   visionOSBundleVersion: 1.0'
     - line: '|   tvOSBundleVersion: 1.0'
-    - line: '|   bundleVersion: v0.2.0-alpha.2'
+    - line: '|   bundleVersion: v0.2.1-test.1'
     - line: '|   preloadedAssets:'
     - line: '|   - {fileID: -944628639613478452, guid: 6b1f549b4aee80d57a546c67b1178028,
         type: 3}'
@@ -852,22 +852,22 @@ MonoBehaviour:
     - rid: 6028974388438106292
       type: {class: WindowsPlatformSettings, ns: UnityEditor.WindowsStandalone, asm: UnityEditor.WindowsStandalone.Extensions}
       data:
-        m_Development: 0
-        m_ConnectProfiler: 0
-        m_BuildWithDeepProfilingSupport: 0
+        m_Development: 1
+        m_ConnectProfiler: 1
+        m_BuildWithDeepProfilingSupport: 1
         m_AllowDebugging: 0
         m_WaitForManagedDebugger: 0
         m_ManagedDebuggerFixedPort: 0
         m_ExplicitNullChecks: 0
         m_ExplicitDivideByZeroChecks: 0
         m_ExplicitArrayBoundsChecks: 0
-        m_CompressionType: 3
+        m_CompressionType: 0
         m_InstallInBuildFolder: 0
         m_InsightsSettingsContainer:
-          m_BuildProfileEngineDiagnosticsState: 2
-        m_WindowsBuildAndRunDeployTarget: 0
+          m_BuildProfileEngineDiagnosticsState: 1
+        m_WindowsBuildAndRunDeployTarget: 2
         m_Architecture: 0
         m_CreateSolution: 0
         m_CopyPDBFiles: 0
-        m_WindowsDevicePortalAddress: 
-        m_WindowsDevicePortalUsername: 
+        m_WindowsDevicePortalAddress: 192.168.51.101:50080
+        m_WindowsDevicePortalUsername: cnVkemlrdHY=
