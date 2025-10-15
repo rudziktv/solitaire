@@ -1,0 +1,25 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="modal" data-source-type="UI.ViewModel.KlondikeResultsModalViewModel, Assembly-CSharp" class="modal">
+        <ui:Label text="Session finished! There are your results." />
+        <ui:VisualElement class="row space-between">
+            <ui:Label text="Time" />
+            <ui:Label text="05:24">
+                <Bindings>
+                    <ui:DataBinding property="text" data-source-path="TimeSpent" binding-mode="ToTarget" />
+                </Bindings>
+            </ui:Label>
+        </ui:VisualElement>
+        <ui:VisualElement class="row space-between">
+            <ui:Label text="Moves" />
+            <ui:Label text="256">
+                <Bindings>
+                    <ui:DataBinding property="text" data-source-path="MovesDone" binding-mode="ToTarget" />
+                </Bindings>
+            </ui:Label>
+        </ui:VisualElement>
+        <ui:VisualElement class="row" style="flex-grow: 1;">
+            <ui:Button text="Next Game" name="next-game" style="flex-grow: 1; flex-basis: 100px; margin-top: 0; margin-right: 3px; margin-bottom: 0; margin-left: 0;" />
+            <ui:Button text="Main Menu" name="main-menu" style="flex-grow: 1; flex-basis: 100px; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 3px;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
