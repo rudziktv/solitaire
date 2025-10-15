@@ -9,11 +9,11 @@
                 <ui:VisualElement class="after" style="flex-grow: 1;" />
             </ui:Button>
             <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="settings" class="transparent square">
-                <ui:VisualElement name="icon" class="icon" style="flex-grow: 1; background-image: resource(&apos;UI/Icons/settings-3-line&apos;); width: 28px; height: 28px;" />
+                <ui:VisualElement name="icon" class="icon" style="flex-grow: 1; background-image: resource(&apos;UI/Icons/settings-3-line&apos;);" />
                 <ui:VisualElement class="after" style="flex-grow: 1;" />
             </ui:Button>
             <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="exit" class="transparent square">
-                <ui:VisualElement name="icon" class="icon" style="flex-grow: 1; background-image: resource(&apos;UI/Icons/shut-down-line&apos;); width: 28px; height: 28px;" />
+                <ui:VisualElement name="icon" class="icon" style="flex-grow: 1; background-image: resource(&apos;UI/Icons/shut-down-line&apos;);" />
                 <ui:VisualElement class="after" style="flex-grow: 1;" />
             </ui:Button>
         </ui:VisualElement>
