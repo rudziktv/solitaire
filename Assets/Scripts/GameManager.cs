@@ -115,6 +115,7 @@ public class GameManager : MonoBehaviour
         // Debug.Log("Loading game mode");
         _lastGameModeArgs = args;
         Timer = 0f;
+        DisableInteractions = false;
         _undoActions.Clear();
         _redoActions.Clear();
         ActionsChanged();
