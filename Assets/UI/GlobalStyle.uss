@@ -25,7 +25,7 @@ Label {
     padding-left: 0;
 }
 
-Button {
+Button.unity-button {
     position: relative;
     color: rgb(11, 20, 30);
     background-color: rgb(98, 144, 195);
@@ -33,10 +33,7 @@ Button {
     border-right-width: 0;
     border-bottom-width: 0;
     border-left-width: 0;
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
-    border-bottom-right-radius: 12px;
-    border-bottom-left-radius: 12px;
+    border-radius: 12px;
     --button-color: rgb(240, 240, 240);
     margin-top: 0;
     margin-right: 0;
@@ -71,7 +68,10 @@ Button .after-wrapper {
 .after {
 }
 
-Button:disabled .after:hover,
+Button:disabled .after:hover {
+    opacity: 0;
+}
+
 Button:disabled:active .after {
     opacity: 0;
 }
@@ -159,8 +159,7 @@ Button.transparent {
 }
 
 .mono-font {
-    -unity-font-definition: initial;
-    -unity-font: resource('UI/Fonts/Inconsolata-Regular');
+    -unity-font-definition: resource('UI/Fonts/ShareTechMono-Regular');
     margin-top: -4px;
     margin-right: -10px;
     margin-bottom: -3px;

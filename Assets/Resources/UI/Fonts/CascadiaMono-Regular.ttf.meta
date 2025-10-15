@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a2f5139afa026bd23bf03f19d21e4005
+guid: 6221aa7b4bc75a2aeae42543d039f27c
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,11 +9,11 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Inconsolata
+  - Cascadia Mono
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
-  ascentCalculationMode: 2
+  ascentCalculationMode: 1
   useLegacyBoundsCalculation: 0
   shouldRoundAdvanceValue: 1
   userData: 

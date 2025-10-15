@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a2f5139afa026bd23bf03f19d21e4005
+guid: ceb21d3a15a1fdaacad1be6d25375d0a
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,11 +9,11 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Inconsolata
+  - Share Tech Mono
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
-  ascentCalculationMode: 2
+  ascentCalculationMode: 1
   useLegacyBoundsCalculation: 0
   shouldRoundAdvanceValue: 1
   userData: 

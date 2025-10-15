@@ -1,0 +1,5 @@
+
+@import url("GlobalStyle.uss");
+@import url("Styles/Modal Style.uss");
+
+VisualElement {}
