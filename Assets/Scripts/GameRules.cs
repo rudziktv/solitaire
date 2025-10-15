@@ -11,7 +11,9 @@ public class GameRules : MonoBehaviour
 
     public bool CardsRevealed => cardsRevealed;
     
+    public event OnSessionFinishedArgs OnSessionFinished;
     public event OnGetItDoneChangedArgs OnGetItDoneChanged;
+    public delegate void OnSessionFinishedArgs();
     public delegate void OnGetItDoneChangedArgs(bool possibleToGetItDone);
     
     protected bool GetItDonePossible = false;
@@ -57,5 +59,10 @@ public class GameRules : MonoBehaviour
             return;
         GetItDonePossible = possibleToGetItDone;
         OnGetItDoneChanged?.Invoke(GetItDonePossible);
+    }
+
+    protected void InvokeSessionFinished()
+    {
+        OnSessionFinished?.Invoke();
     }
 }

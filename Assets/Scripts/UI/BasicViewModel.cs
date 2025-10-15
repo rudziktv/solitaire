@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.CompilerServices;
 using UnityEngine.UIElements;
 
 namespace UI
@@ -11,5 +12,10 @@ namespace UI
         }
 
         public event EventHandler<BindablePropertyChangedEventArgs> propertyChanged;
+        
+        protected void Notify([CallerMemberName] string property = "")
+        {
+            propertyChanged?.Invoke(this, new BindablePropertyChangedEventArgs(property));
+        }
     }
 }

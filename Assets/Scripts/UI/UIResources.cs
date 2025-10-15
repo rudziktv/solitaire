@@ -11,5 +11,7 @@ namespace UI
 
         public VisualTreeAsset gameplayGUI;
         public VisualTreeAsset menuGUI;
+
+        public VisualTreeAsset klondikeResultModal;
     }
 }

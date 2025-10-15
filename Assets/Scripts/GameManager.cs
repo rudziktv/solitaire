@@ -22,8 +22,10 @@ public class GameManager : MonoBehaviour
     public float AutoMoveDelay = 3f;
     
     public bool Paused { get; private set; }
+    public bool TimerPaused { get; set; }
     public float Timer { get; private set; }
     public bool DisableInteractions { get; set; }
+    public int Moves { get; set; }
     
     public GameRules GameRules => gameRules;
     public GameObject SlotPrefab => slotPrefab;
@@ -71,7 +73,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (!Paused)
+        if (!Paused && !TimerPaused)
             Timer += Time.deltaTime;
         CalculateScreenRatio();
     }
@@ -115,6 +117,9 @@ public class GameManager : MonoBehaviour
         // Debug.Log("Loading game mode");
         _lastGameModeArgs = args;
         Timer = 0f;
+        Moves = 0;
+        Paused = false;
+        TimerPaused = false;
         DisableInteractions = false;
         _undoActions.Clear();
         _redoActions.Clear();
@@ -152,6 +157,7 @@ public class GameManager : MonoBehaviour
         action.Invoke();
         _redoActions.Add(action);
         GameRules.RefreshGetItDone();
+        Moves++;
         ActionsChanged();
     }
 
@@ -162,6 +168,7 @@ public class GameManager : MonoBehaviour
         _redoActions.Remove(action);
         action.Invoke();
         _undoActions.Add(action);
+        Moves++;
         ActionsChanged();
     }
 

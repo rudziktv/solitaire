@@ -142,7 +142,19 @@ namespace Klondike
         public override void OnStackMove(Stack stack)
         {
             base.OnStackMove(stack);
+            Manager.Moves++;
             TryInvokeOnGetItDoneChanged(IsPossibleToGetItDone());
+
+            CheckIfSessionFinished();
+        }
+
+        private void CheckIfSessionFinished()
+        {
+            if (_finalSlots.Any(finalSlot => finalSlot.Cards.Count != 13))
+                return;
+
+            Manager.DisableInteractions = true;
+            InvokeSessionFinished();
         }
 
         public override bool IsPossibleToGetItDone()
@@ -179,6 +191,8 @@ namespace Klondike
                 }
             }
             
+            // code there means finished game
+            // InvokeSessionFinished(); not necessary, because OnStackMove will be invoked anyway
         }
     }
 }

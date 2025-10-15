@@ -3,7 +3,7 @@
         <ui:Label text="Session finished! There are your results." />
         <ui:VisualElement class="row space-between">
             <ui:Label text="Time" />
-            <ui:Label text="05:24">
+            <ui:Label>
                 <Bindings>
                     <ui:DataBinding property="text" data-source-path="TimeSpent" binding-mode="ToTarget" />
                 </Bindings>
@@ -11,7 +11,7 @@
         </ui:VisualElement>
         <ui:VisualElement class="row space-between">
             <ui:Label text="Moves" />
-            <ui:Label text="256">
+            <ui:Label>
                 <Bindings>
                     <ui:DataBinding property="text" data-source-path="MovesDone" binding-mode="ToTarget" />
                 </Bindings>

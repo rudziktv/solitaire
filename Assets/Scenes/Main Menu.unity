@@ -222,10 +222,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Menu GUI Document
       objectReference: {fileID: 0}
-    - target: {fileID: 5698991382479135133, guid: 01af165e5375c94f887be0250ee9c4de, type: 3}
-      propertyPath: resources.menuGUI
-      value: 
-      objectReference: {fileID: 9197481963319205126, guid: 38f63102c2d044246b2d95f9aa4df3fa, type: 3}
     - target: {fileID: 6721421260821894951, guid: 01af165e5375c94f887be0250ee9c4de, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

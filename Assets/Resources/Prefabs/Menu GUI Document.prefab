@@ -49,6 +49,13 @@ MonoBehaviour:
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 9197481963319205126, guid: 38f63102c2d044246b2d95f9aa4df3fa, type: 3}
   m_SortingOrder: 0
+  m_Position: 0
+  m_WorldSpaceSizeMode: 1
+  m_WorldSpaceWidth: 1920
+  m_WorldSpaceHeight: 1080
+  m_PivotReferenceSize: 0
+  m_Pivot: 0
+  m_WorldSpaceCollider: {fileID: 0}
 --- !u!114 &5698991382479135133
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65,3 +72,5 @@ MonoBehaviour:
     gamemodeComponent: {fileID: 9197481963319205126, guid: 28ac071b1b351b5c68d9ab806272fef4, type: 3}
     popupModal: {fileID: 9197481963319205126, guid: faf9030caac27bcac8c79ba3ad2bce66, type: 3}
     gameplayGUI: {fileID: 9197481963319205126, guid: 9bbecf4531cb4674c87c1c0c741c8182, type: 3}
+    menuGUI: {fileID: 9197481963319205126, guid: 38f63102c2d044246b2d95f9aa4df3fa, type: 3}
+    klondikeResultModal: {fileID: 9197481963319205126, guid: 775a828621e66965586627b2f9e2c3dd, type: 3}

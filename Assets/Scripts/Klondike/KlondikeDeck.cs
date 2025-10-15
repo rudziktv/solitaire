@@ -127,6 +127,9 @@ namespace Klondike
                     _audioSource.PlayOneShot(Sounds.ResetDeckUndoSound);
                 });
             }
+
+            if (Cards.Count + _slot.Cards.Count > 0)
+                Manager.Moves++;
         }
     }
 }

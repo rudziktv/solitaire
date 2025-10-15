@@ -1,4 +1,5 @@
 using Preferences;
+using UI.ViewModel;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Utils;
@@ -12,6 +13,8 @@ namespace UI.Models
         private Label _timer;
         private VisualElement _popupModal;
         private TemplateContainer _popupTemplate;
+
+        private KlondikeResultsModalViewModel _resultsModal;
         
         public override void OnViewCreated()
         {
@@ -64,18 +67,14 @@ namespace UI.Models
         
         private void InitializePopup()
         {
-            _popupTemplate = Assets.popupModal.Instantiate();
-            _popupTemplate.AddToClassList("top-layer");
-            _popupTemplate.AddToClassList("hide");
-            _popupTemplate.AddToClassList("hiddable-element");
-            View.Add(_popupTemplate);
-            _popupModal = _popupTemplate.Q<VisualElement>("backdrop");
-            
-            var leave = _popupModal.Q<Button>("leave");
-            var stay = _popupModal.Q<Button>("stay");
+            _resultsModal = new KlondikeResultsModalViewModel(Controller, this.CreateModalLayer());
+            _resultsModal.OnViewCreated();
 
-            leave.clicked += Application.Quit;
-            stay.clicked += Manager.Escape;
+            Manager.GameRules.OnSessionFinished += () =>
+            {
+                _resultsModal.SetSessionInfo(_timer.text, Manager.Moves.ToString());
+                _resultsModal.SetVisibility(true);
+            };
         }
         
         private void VolumeControlSetup()
