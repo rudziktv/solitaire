@@ -70,6 +70,7 @@ namespace UI
             view.style.flexGrow = 1;
             _uiDocument.rootVisualElement.Add(view);
             ChangeModel(model);
+            view.dataSource = model;
         }
     }
 }
